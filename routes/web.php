@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Pasien\PasienController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,11 @@ Route::prefix('dokter')->group(function () {
     });
 });
 
+Route::get('/pemesanan', function () {
+    return view('pasien.pemesanan');
+});
+
+Route::post('proses-pemesanan', [PasienController::class, 'prosesbooking']);
 
 //LOGIN
 // Route::get('/login', function () {
