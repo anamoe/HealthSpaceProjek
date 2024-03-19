@@ -54,6 +54,7 @@ Route::get('/pemesanan', function () {
 });
 
 Route::post('proses-pemesanan', [PasienController::class, 'prosesbooking']);
+Route::get('pemesanan-pending', [PasienController::class, 'bookingpending'])->name('pemesanan-pending');
 
 //LOGIN
 // Route::get('/login', function () {
