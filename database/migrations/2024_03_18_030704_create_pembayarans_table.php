@@ -17,9 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('kode_pembayaran');
             $table->string('nama_poli');
+            $table->string('konsul_id');
             $table->foreignId('pasien_id')->constrained();
             $table->string('jumlah_pembayaran');
             $table->string('tanggal_pembayaran');
+            $table->string('metode_pembayaran');
+
 
 
             $table->timestamps();

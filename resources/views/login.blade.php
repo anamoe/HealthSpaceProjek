@@ -1,63 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="login_assets/style.css">
-    <title>signin-signup</title>
+    <link rel="stylesheet" href="{{asset('toastr/toastr.min.css')}}">
+    <title>HEALTHSPACE</title>
 </head>
+
 <body>
     <div class="container">
         <div class="signin-signup">
-            <form action="" class="sign-in-form">
-                <h2 class="title">Sign in</h2>
+            <form action="{{url('postlogin')}}" method="post" class="sign-in-form">
+                @csrf
+                @if(session()->has('message'))
+                <div class="toastrDefaultSuccess" role="alert" id="notif">
+                </div>
+                @endif
+
+                @if(session()->has('error'))
+                <div class="alert alert-danger" role="alert" id="notif">
+                    <span data-notify="icon" class="fa fa-bell"></span>
+                    <span data-notify="title">Gagal</span> <br>
+                    <span data-notify="message">{{session()->get('error')}}</span>
+                </div>
+                @endif
+                @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                    <strong>Gagal !</strong>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                
+                <h4 class="title">Selamat Datang di</h4>
+                <h4 class="title">HealthSpace</h4>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username">
+                    <input type="text" placeholder="Email" name="email">
                 </div>
+
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" name="password">
                 </div>
                 <!-- Checkbox -->
-                <div class="remember-forgot">
+                <!-- <div class="remember-forgot">
                     <label><input type="checkbox"> Remember me </label>
                     <a href="#">Forgot Password?</a>
-                </div>
+                </div> -->
                 <!-- end section Checkbox -->
                 <input type="submit" value="Login" class="btn">
-                <p class="social-text">Or Sign in with </p>
+                <!-- <p class="social-text">Or Sign in with </p>
                 <div class="social-media">
                     <a href="" class="social-icon">
                         <i class="fab fa-google"></i>
                     </a>
                 </div>
-                <a href="/homepage" class="small text-muted">Klinik Fanda Berkat Medika Panti</a>
+                <a href="/homepage" class="small text-muted">Klinik Fanda Berkat Medika Panti</a> -->
             </form>
             <form action="" class="sign-up-form">
-                <h2 class="title">Sign up</h2>
-                <div class="input-field">
+                <h4 class="title">Selamat Datang di</h4>
+                <h4 class="title">HealthSpace</h4>
+                <!-- <div class="input-field">
                     <i class="fas fa-user"></i>
                     <input type="text" placeholder="Username">
-                </div>
+                </div> -->
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="text" placeholder="Email">
+                    <input type="text" placeholder="Email" name="email">
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" name="password">
                 </div>
                 <input type="submit" value="Sign up" class="btn">
-                <p class="social-text">Or Sign Up with </p>
+                <!-- <p class="social-text">Or Sign Up with </p>
                 <div class="social-media">
                     <a href="" class="social-icon">
                         <i class="fab fa-google"></i>
                     </a>
                 </div>
-                <a href="/homepage" class="small text-muted">Klinik Fanda Berkat Medika Panti</a>
+                <a href="/homepage" class="small text-muted">Klinik Fanda Berkat Medika Panti</a> -->
             </form>
         </div>
         <div class="panels-container">
@@ -68,7 +98,7 @@
                     <img src="login_assets/img/logo.png" alt="" class="image">
                     <button class="btn" id="sign-in-btn">Sign in</button>
                 </div>
-                
+
             </div>
             <div class="panel right-panel">
                 <div class="content">
@@ -81,5 +111,7 @@
         </div>
     </div>
     <script src="login_assets/js/login.js"></script>
+    <script src="{{asset('toastr/toastr.min.js')}}"></script>
 </body>
+
 </html>

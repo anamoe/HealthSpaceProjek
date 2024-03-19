@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,16 +14,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 //HOMEPAGE
-Route::get('/homepage', function () {
+Route::get('/', function () {
     return view('homepage');
 });
+Route::get('login', [AuthController::class, 'login']);
+Route::post('postlogin', [AuthController::class, 'postlogin']);
+Route::get('logout', [AuthController::class, 'logout']);
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    });
+});
+
+Route::prefix('pasien')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('pasien.dashboard');
+    });
+});
+
+
+Route::prefix('dokter')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dokter.dashboard');
+    });
+});
+
 
 //LOGIN
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
+

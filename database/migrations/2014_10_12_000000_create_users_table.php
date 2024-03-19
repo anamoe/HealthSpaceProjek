@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nama')->nullable();
             $table->string('role');
             $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();
@@ -23,6 +24,25 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        User::create([
+            'nama' => 'Admin',
+            'role' =>'admin',
+            'email' =>'admin@gmail.com',
+            'password'=>bcrypt(123)
+        ]);
+        User::create([
+            'nama' => 'Passien',
+            'role'=>'pasien',
+            'email'=>'pasien@gmail.com',
+            'password'=>bcrypt(123)
+        ]);
+        User::create([
+            'nama' => 'Dokter',
+            'role'=>'dokter',
+            'email'=>'dokter@gmail.com',
+            'password'=>bcrypt(123)
+        ]);
+  
     }
 
     /**
