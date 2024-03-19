@@ -31,9 +31,9 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 
 Route::prefix('admin')->group(function () {
-    Route::get('dashboard', [AdminDashboardController::class, 'index']);
-    Route::get('poli', [AdminPoliController::class, 'index']);
-    Route::get('dokter', [AdminDokterController::class, 'index']);
+    Route::resource('dashboard', AdminDashboardController::class);
+    Route::resource('poli', AdminPoliController::class);
+    Route::resource('dokter', AdminDokterController::class);
 });
 
 Route::prefix('pasien')->group(function () {
