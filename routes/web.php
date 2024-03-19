@@ -4,6 +4,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Pasien\PasienController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\PoliController as AdminPoliController;
+use App\Http\Controllers\Admin\DokterController as AdminDokterController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,9 +31,9 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    Route::get('dashboard', [AdminDashboardController::class, 'index']);
+    Route::get('poli', [AdminPoliController::class, 'index']);
+    Route::get('dokter', [AdminDokterController::class, 'index']);
 });
 
 Route::prefix('pasien')->group(function () {

@@ -15,13 +15,33 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
+
+    @if(auth()->user()->role == 'admin')
         <!-- Dashboard -->
-        <li class="menu-item active">
-            <a href="index.html" class="menu-link">
+        <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : ''  }}">
+            <a href="{{url('admin/dashboard')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+                <div>Dashboard</div>
             </a>
         </li>
+
+           <!-- Dashboard -->
+           <li class="menu-item {{ request()->is('admin/poli') ? 'active' : ''  }} ">
+            <a href="{{url('admin/poli')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-first-aid"></i>
+                <div>Poli</div>
+            </a>
+        </li>
+
+           <!-- Dashboard -->
+           <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
+            <a href="{{url('admin/dokter')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-git-repo-forked"></i>
+                <div>Dokter</div>
+            </a>
+        </li>
+
+    @endif
 
         
     </ul>
