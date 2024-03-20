@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Poli;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,13 @@ return new class extends Migration
             $table->string('nama_poli');
             $table->timestamps();
         });
+
+        Poli::create([
+            'nama_poli'=>'Poli Umum'
+        ]);
+        Poli::create([
+            'nama_poli'=>'Poli Gigi'
+        ]);
     }
 
     /**

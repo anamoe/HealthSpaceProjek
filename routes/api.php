@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pasien\PasienController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::post('payment_notification', [PasienController::class, 'notification_payment']);
+Route::get('sukses', [PasienController::class, 'return']);
+
+
+

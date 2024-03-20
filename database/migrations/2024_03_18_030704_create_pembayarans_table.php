@@ -16,12 +16,15 @@ return new class extends Migration
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
             $table->string('kode_pembayaran');
-            $table->string('nama_poli');
-            $table->string('konsul_id');
-            $table->foreignId('pasien_id')->constrained();
+            $table->foreignId('konsul_id')->constrained()->nullable();
             $table->string('jumlah_pembayaran');
-            $table->string('tanggal_pembayaran');
-            $table->string('metode_pembayaran');
+            $table->string('tanggal_pembayaran')->nullable();
+            $table->string('metode_pembayaran')->nullable();
+            $table->string('payment_token');
+            $table->string('payment_url');
+            $table->string('status_pembayaran');
+
+
 
 
 
