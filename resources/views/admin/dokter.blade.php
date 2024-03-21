@@ -8,7 +8,7 @@
 
         <div class="card-header bg-success-dark">
             <h6 class="card-title text-white">Dokter
-                <button class="btn btn-sm btn-primary float-end">Add</button>
+                <a href="{{url('admin/dokter/create')}}"><button class="btn btn-sm btn-primary float-end">Add</button></a>
             </h6>
         </div>
 
@@ -19,19 +19,19 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Email</th>
                             <th>Nama</th>
                             <th>Poli</th>
+                            <th>Spesialis</th>
                             <th width="25%">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-
+                        @foreach($data as $v)
                         <tr>
-                            <td>1</td>
-                            <td>Albert Cook</td>
-                            <td>Albertook@gmail.c</td>
-                            <td>Albert Cook</td>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$v->nama}}</td>
+                            <td>{{$v->nama_poli}}</td>
+                            <td>{{$v->spesialis}}</td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -39,14 +39,15 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
+                                        <a class="dropdown-item" href="{{url('admin/dokter/'.$v->id)}}"><i
                                                 class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
+                                        <a class="dropdown-item" href="{{url('admin/dokter/hapus/'.$v->id)}}"><i
                                                 class="bx bx-trash me-1"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
+                        @endforeach
 
 
                     </tbody>

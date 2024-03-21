@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <div class="signin-signup">
-            <form action="{{url('postlogin')}}" method="post" class="sign-in-form">
+            <form action="{{url('postregister')}}" method="post" class="sign-in-form">
                 @csrf
                 @if(session()->has('message'))
                 <div class="toastrDefaultSuccess" role="alert" id="notif">
@@ -50,28 +50,24 @@
                     <i class="fas fa-lock"></i>
                     <input type="password" placeholder="Password" name="password">
                 </div>
-                <!-- Checkbox -->
-                <!-- <div class="remember-forgot">
-                    <label><input type="checkbox"> Remember me </label>
-                    <a href="#">Forgot Password?</a>
-                </div> -->
-                <!-- end section Checkbox -->
-                <input type="submit" value="SIGN IN" class="btn">
-                <!-- <p class="social-text">Or Sign in with </p>
-                <div class="social-media">
-                    <a href="" class="social-icon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                </div>
-                <a href="/homepage" class="small text-muted">Klinik Fanda Berkat Medika Panti</a> -->
+             
+                <input type="submit" value="SIGN UP" class="btn">
+               
             </form>
-            <form action="" method="post" class="sign-up-form">
-   
+            <form action="{{url('postregister')}}" method="post" class="sign-up-form">
+              
+              
+        
             </form>
         </div>
         <div class="panels-container">
             <div class="panel left-panel">
-              
+                <div class="content">
+                    <h3>Sudah Punya Akun?</h3>
+                    <p></p>
+                    <img src="login_assets/img/logo.png" alt="" class="image">
+                    <button class="btn" id="sign-in-btn">Sign in</button>
+                </div>
 
             </div>
             <div class="panel right-panel">
@@ -79,7 +75,8 @@
                     <h3>Belum Punya Akun?</h3>
                     <p></p>
                     <img src="login_assets/img/logo.png" alt="" class="image">
-                    <a href="{{url('register')}}">  <button  class="btn" id="">Sign Up</button></a>
+                  
+                    <a href="{{url('login')}}">  <button  class="btn" id="">Sign In</button></a>
                 </div>
             </div>
         </div>
@@ -88,16 +85,8 @@
 
     <script src="login_assets/js/login.js"></script>
     <script src="{{asset('toastr/toastr.min.js')}}"></script>
-    <script>
-			$(function() {
-
-				$('.toastrDefaultSuccess').addClass(function() {
-
-					toastr.success('Berhasil Mendaftar. Silahkan Login')
-				});
-
-			});
-		</script>
+   
+    
 </body>
 
 </html>

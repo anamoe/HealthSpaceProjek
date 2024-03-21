@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pasien;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,9 +34,9 @@ class AuthController extends Controller
         }
 
 
-        if ($request->password != $request->kpassword) {
-            return redirect()->back()->with('error', 'Password tidak sama');
-        }
+        // if ($request->password != $request->kpassword) {
+        //     return redirect()->back()->with('error', 'Password tidak sama');
+        // }
 
         if (User::where('email', '=', $input['email'])->first() == false) {
             $request->merge([
@@ -44,13 +45,16 @@ class AuthController extends Controller
                 'email' => $request->email,
 
             ]);
-            User::create($request->except(['_token']));
+         $user=   User::create($request->except(['_token']));
+            Pasien::create([
+                'user_id'=>$user->id
+            ]);
 
             return redirect('login')->with('message', 'Berhasil Mendaftar');
             // return $i;
         } else {
             // return "eror";
-            return redirect()->back()->with('error', 'Email sudah terdaftar');
+            return redirect()->back()->with('errorr', 'Email sudah terdaftar');
         }
     }
     public function postlogin(Request $request)

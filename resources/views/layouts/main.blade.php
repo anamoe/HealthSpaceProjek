@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="{{asset('admin_theme/assets/vendor/css/pages/app-chat.css')}}" />
     <script src="{{asset('admin_theme/assets/vendor/js/helpers.js')}}"></script>
     <script src="{{asset('admin_theme/assets/js/config.js')}}"></script>
+
+    <link rel="stylesheet" href="{{asset('toastr/toastr.min.css') }}">
+
 </head>
 
 <body>
@@ -151,7 +154,7 @@
                                 </script>
                                 , made with ❤️ by
                                 <a href="" target="_blank"
-                                    class="footer-link fw-bolder">Spcae Health</a>
+                                    class="footer-link fw-bolder"> Health Space </a>
                             </div>
                         
                             </div>
@@ -182,6 +185,22 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <script src="{{asset('admin_theme/assets/vendor/js/app-chat.js')}}"></script>
+
+    
+    <!-- pesan cardeee -->
+    <script src="{{asset('toastr/toastr.min.js') }}"></script>
+
+<script>
+    toastr.options.timeOut = 1500;
+    toastr.options.showMethod = 'slideDown';
+    toastr.options.hideMethod = 'slideUp';
+    toastr.options.closeMethod = 'slideUp';
+    @if(session()->has('success'))
+        toastr.success('{{session()->get("success")}}')
+    @elseif(session()->has('error'))
+        toastr.error('{{session()->get("error")}}')
+    @endif
+</script>
 
 </body>
 

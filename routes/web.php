@@ -26,28 +26,43 @@ Route::get('/', function () {
     return view('homepage');
 });
 Route::get('login', [AuthController::class, 'login']);
+Route::get('register', function () {
+    return view('register');
+});
+
 Route::post('postlogin', [AuthController::class, 'postlogin']);
+Route::post('postregister', [AuthController::class, 'postregister']);
 Route::get('logout', [AuthController::class, 'logout']);
 
 
-Route::prefix('admin')->group(function () {
-    Route::resource('dashboard', AdminDashboardController::class);
-    Route::resource('poli', AdminPoliController::class);
-    Route::resource('dokter', AdminDokterController::class);
-});
-
-Route::prefix('pasien')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pasien.dashboard');
+Route::middleware(['role:admin'])->group(function () {  
+    Route::prefix('admin')->group(function () {
+        Route::resource('dashboard', AdminDashboardController::class);
+        Route::resource('poli', AdminPoliController::class);
+        Route::resource('dokter', AdminDokterController::class);
+        Route::post('dokter/update/{id}', [AdminDokterController::class,'updates']);
+        Route::get('dokter/hapus/{id}', [AdminDokterController::class,'destroy']);
     });
 });
 
 
-Route::prefix('dokter')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dokter.dashboard');
+Route::middleware(['role:pasien'])->group(function () {  
+    Route::prefix('pasien')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('pasien.dashboard');
+        });
     });
 });
+
+
+Route::middleware(['role:dokter'])->group(function () {  
+    Route::prefix('dokter')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dokter.dashboard');
+        });
+    });
+});
+
 
 Route::get('/pemesanan', function () {
     return view('pasien.pemesanan');
