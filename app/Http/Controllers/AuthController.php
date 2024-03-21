@@ -6,6 +6,7 @@ use App\Models\Pasien;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -138,5 +139,16 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function profil_pasien(){
+        $users =DB::table('pasiens')
+        ->leftJoin('users','pasiens.user_id','users.id')
+        ->select('users.*','pasiens.*')
+        ->where('pasiens.user_id',auth()->user()->id)
+        ->orderBy('pasiens.id','desc')->first();
+        // return $data;
+
+        return view('pasien.profil-pasien',compact('users'));
     }
 }

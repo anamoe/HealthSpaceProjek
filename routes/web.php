@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PoliController as AdminPoliController;
 use App\Http\Controllers\Admin\DokterController as AdminDokterController;
-
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +51,8 @@ Route::middleware(['role:pasien'])->group(function () {
         Route::get('/dashboard', function () {
             return view('pasien.dashboard');
         });
+Route::get('profil-pasien', [AuthController::class, 'profil_pasien']);
+
     });
 });
 

@@ -62,7 +62,7 @@
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Place this tag where you want the button to render. -->
                             <li class="nav-item lh-1 me-3">
-                                Admin
+                                {{auth()->user()->nama}}
                             </li>
 
                             <!-- User -->
@@ -75,7 +75,7 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
+                                    <!-- <li>
                                         <a class="dropdown-item" href="#">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
@@ -85,28 +85,36 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
+                                            
+                                                    <small class="text-muted">{{auth()->user()->role}}</small>
                                                 </div>
                                             </div>
                                         </a>
-                                    </li>
+                                    </li> -->
+                                    
                                     <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
+                                        @if(auth()->user()->role=='pasien')
+                                        <a class="dropdown-item" href="{{url('profil-pasien')}}">
                                             <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">My Profile</span>
+                                            <span class="align-middle">Profil</span>
                                         </a>
+                                        @elseif(auth()->user()->role=='dokter')
+                                        <a class="dropdown-item" href="{{url('profil-dokter')}}">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">Profil</span>
+                                        </a>
+                                        @else
+                                        @endif
+
+                                      
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <a class="dropdown-item" href="#">
                                             <i class="bx bx-cog me-2"></i>
                                             <span class="align-middle">Settings</span>
                                         </a>
-                                    </li>
-                                    <li>
+                                    </li> -->
+                                    <!-- <li>
                                         <a class="dropdown-item" href="#">
                                             <span class="d-flex align-items-center align-middle">
                                                 <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
@@ -115,12 +123,12 @@
                                                     class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="auth-login-basic.html">
+                                        <a class="dropdown-item" href="{{url('logout')}}">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
