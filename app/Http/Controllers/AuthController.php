@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasien;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -147,8 +148,56 @@ class AuthController extends Controller
         ->select('users.*','pasiens.*')
         ->where('pasiens.user_id',auth()->user()->id)
         ->orderBy('pasiens.id','desc')->first();
-        // return $data;
+        $users->profil = asset('profil/'.$users->profil);
+        // return $users;
 
         return view('pasien.profil-pasien',compact('users'));
+    }
+
+    public function profil_pasien_update(Request $request,$id){
+
+        
+        $data0 = $request->validate([
+            'nama'=>'required',
+            // 'email'=>'required',    
+        
+        ]);
+        
+        $data = $request->validate([
+            'tanggal_lahir'=>'required',
+            'alamat'=>'required',
+            'berat_badan'=>'required',
+            'tinggi_badan'=>'required',
+            'no_telp'=>'required',
+            'jenis_kelamin'=>'required',
+        
+        ]);
+
+        if($request->hasFile('foto')){
+            $tujuan_upload = public_path('profil');
+            $file = $request->file('foto');
+            $namaFile = Carbon::now()->format('Ymd') . $file->getClientOriginalName();
+            $file->move($tujuan_upload, $namaFile);
+            // return $file;
+            $data0['profil'] = $namaFile;
+        }
+    
+       $pasien = Pasien::where('id',$id)->first();
+
+
+    //    if($request->password){
+    //     $data0['password']=bcrypt($request->password);
+    //     // return $request;
+    // }
+        $pasien->update($data);
+      
+        // return $req;
+    
+        User::where('id',$pasien->user_id)->update($data0);
+   
+        
+        return redirect('pasien/profil-pasien')
+        ->with('success',' Profil Pasien Berhasil Diupdate');
+
     }
 }

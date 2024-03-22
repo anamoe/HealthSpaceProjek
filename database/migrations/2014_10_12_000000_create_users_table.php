@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('profil')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -28,19 +29,22 @@ return new class extends Migration
             'nama' => 'Admin',
             'role' =>'admin',
             'email' =>'admin@gmail.com',
-            'password'=>bcrypt(123)
+            'password'=>bcrypt(123),
+            'profil'=>'profil.jpg'
         ]);
         User::create([
             'nama' => 'Passien',
             'role'=>'pasien',
             'email'=>'pasien@gmail.com',
-            'password'=>bcrypt(123)
+            'password'=>bcrypt(123),
+            'profil'=>'profil.jpg'
         ]);
         User::create([
             'nama' => 'Dokter',
             'role'=>'dokter',
             'email'=>'dokter@gmail.com',
-            'password'=>bcrypt(123)
+            'password'=>bcrypt(123),
+            'profil'=>'doctor.png'
         ]);
   
     }

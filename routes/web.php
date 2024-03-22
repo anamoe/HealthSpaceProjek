@@ -52,6 +52,8 @@ Route::middleware(['role:pasien'])->group(function () {
             return view('pasien.dashboard');
         });
 Route::get('profil-pasien', [AuthController::class, 'profil_pasien']);
+Route::post('profil_pasien_update/{id}', [AuthController::class, 'profil_pasien_update']);
+
 
     });
 });
