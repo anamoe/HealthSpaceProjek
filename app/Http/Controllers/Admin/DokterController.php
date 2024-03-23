@@ -28,6 +28,7 @@ class DokterController extends Controller
     }
 
     public function store(Request $request){
+      
 
         $data0 = $request->validate([
             'nama'=>'required',
@@ -111,7 +112,7 @@ class DokterController extends Controller
         }
         
 
-        return redirect('admin/dokter')
+        return redirect()->back()
         ->with('success','Data Dokter Berhasil Dihapus');
     }
 

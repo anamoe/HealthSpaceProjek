@@ -7,8 +7,8 @@
     <div class="card">
 
         <div class="card-header bg-success-dark">
-            <h6 class="card-title text-white">Dokter
-                <a href="{{url('admin/dokter/create')}}"><button class="btn btn-sm btn-primary float-end">Add</button></a>
+            <h6 class="card-title text-white">Jadwal Praktik Dokter :{{$dokter->nama}}
+                <a href="{{url('dokter/jadwal_praktik/create',$id_dokter)}}"><button class="btn btn-sm btn-primary float-end">Add</button></a>
             </h6>
         </div>
 
@@ -19,20 +19,18 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Poli</th>
-                            <th>Spesialis</th>
+                            <th>Hari Praktik</th>
+                            <th>Jam Praktik</th>
                             <th width="25%">Actions</th>
-                            <th width="20%"></th>
+                           
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach($data as $v)
+                        @foreach($jadwal as $v)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$v->nama}}</td>
-                            <td>{{$v->nama_poli}}</td>
-                            <td>{{$v->spesialis}}</td>
+                            <td>{{$v->hari_praktik}}</td>
+                            <td>{{$v->jam_praktik_awal}} - {{$v->jam_praktik_akhir}}</td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -40,20 +38,12 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{url('admin/dokter/'.$v->id)}}"><i
+                                        <a class="dropdown-item" href="{{url('dokter/jadwal_praktiks/'.$v->id)}}"><i
                                                 class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="{{url('admin/dokter/hapus/'.$v->id)}}"><i
+                                        <a class="dropdown-item" href="{{url('dokter/jadwal_praktik/hapus/'.$v->id)}}"><i
                                                 class="bx bx-trash me-1"></i> Delete</a>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                          
-                                <a
-                                    href="{{url('dokter/jadwal_praktik',$v->id)}}"><span
-                                        class="badge bg-primary rounded-3 fw-semibold">Jadwal Praktik Dokter</span></a>
-                              
-                           
                             </td>
                         </tr>
                         @endforeach

@@ -70,7 +70,7 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt
+                                        <img src="{{asset('profil/'.auth()->user()->profil)}}" alt
                                             class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
@@ -94,12 +94,12 @@
                                     
                                     <li>
                                         @if(auth()->user()->role=='pasien')
-                                        <a class="dropdown-item" href="{{url('profil-pasien')}}">
+                                        <a class="dropdown-item" href="{{url('pasien/profil-pasien')}}">
                                             <i class="bx bx-user me-2"></i>
                                             <span class="align-middle">Profil</span>
                                         </a>
                                         @elseif(auth()->user()->role=='dokter')
-                                        <a class="dropdown-item" href="{{url('profil-dokter')}}">
+                                        <a class="dropdown-item" href="{{url('dokter/profil-dokter')}}">
                                             <i class="bx bx-user me-2"></i>
                                             <span class="align-middle">Profil</span>
                                         </a>

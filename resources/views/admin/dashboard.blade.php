@@ -7,7 +7,7 @@
     <div class="card bg-success-dark px-5 py-2 text-white">
         <div class="d-flex justify-content-between">
             <div class="judul d-flex flex-column justify-content-center">
-                <h4 class="text-white mb-0">SPACE HEALTH</h4>
+                <h4 class="text-white mb-0">Health Space</h4>
                 <h6 class="text-white mt-0">Dashboard</h6>
             </div>
             <div class="doctor">
@@ -29,7 +29,7 @@
 
                     </div>
                     <span class="fw-medium d-block mb-1">Poli</span>
-                    <h3 class="card-title mb-2">7</h3>
+                    <h3 class="card-title mb-2">{{$poli}}</h3>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
 
                     </div>
                     <span class="fw-medium d-block mb-1">Dokter</span>
-                    <h3 class="card-title mb-2">6</h3>
+                    <h3 class="card-title mb-2">{{$dokter}}</h3>
                 </div>
             </div>
         </div>

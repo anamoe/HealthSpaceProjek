@@ -18,9 +18,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('poli_id')->constrained();
-            $table->string('hari_praktik');
+            // $table->string('hari_praktik');
             $table->string('spesialis');
-            $table->string('jam_praktik');
+            // $table->string('jam_praktik');
 
             $table->timestamps();
         });
@@ -28,9 +28,7 @@ return new class extends Migration
         Dokter::create([
             'user_id'=>3,
             'poli_id'=>1,
-            'hari_praktik'=>'jumat',
             'spesialis'=>'Jantung',
-            'jam_praktik'=>'09:00'
         ]);
     }
 

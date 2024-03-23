@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dokter;
 use App\Models\Pasien;
+use App\Models\Poli;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -200,4 +202,63 @@ class AuthController extends Controller
         ->with('success',' Profil Pasien Berhasil Diupdate');
 
     }
+
+    public function profil_dokter(){
+        $users =DB::table('dokters')
+        ->leftJoin('users','dokters.user_id','users.id')
+        ->select('users.*','dokters.*')
+        ->where('dokters.user_id',auth()->user()->id)
+        ->orderBy('dokters.id','desc')->first();
+        $users->profil = asset('profil/'.$users->profil);
+        // return $users;
+        $poli = Poli::all();
+
+        return view('dokter.profil-dokter',compact('users','poli'));
+    }
+
+    public function profil_dokter_update(Request $request,$id){
+
+        // return $request;
+
+        
+        $data0 = $request->validate([
+            'nama'=>'required',
+            // 'email'=>'required',    
+        
+        ]);
+        
+        $data = $request->validate([
+            // 'hari_praktik'=>'required',
+            // 'jam_praktik'=>'required',
+            'spesialis'=>'required',
+            'poli_id'=>'required'
+           
+        
+        ]);
+        
+
+        if($request->hasFile('foto')){
+            $tujuan_upload = public_path('profil');
+            $file = $request->file('foto');
+            $namaFile = Carbon::now()->format('Ymd') . $file->getClientOriginalName();
+            $file->move($tujuan_upload, $namaFile);
+            // return $file;
+            $data0['profil'] = $namaFile;
+        }
+    
+       $d = Dokter::where('id',$id)->first();
+
+
+        $d->update($data);
+      
+     
+    
+        User::where('id',$d->user_id)->update($data0);
+   
+        
+        return redirect('dokter/profil-dokter')
+        ->with('success',' Profil Pasien Berhasil Diupdate');
+
+    }
+
 }

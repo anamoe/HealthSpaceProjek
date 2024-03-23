@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PoliController as AdminPoliController;
 use App\Http\Controllers\Admin\DokterController as AdminDokterController;
+use App\Http\Controllers\Dokter\JadwalPraktikDokterController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -35,35 +36,36 @@ Route::post('postregister', [AuthController::class, 'postregister']);
 Route::get('logout', [AuthController::class, 'logout']);
 
 
-Route::middleware(['role:admin'])->group(function () {  
+Route::middleware(['role:admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::resource('dashboard', AdminDashboardController::class);
         Route::resource('poli', AdminPoliController::class);
         Route::resource('dokter', AdminDokterController::class);
-        Route::post('dokter/update/{id}', [AdminDokterController::class,'updates']);
-        Route::get('dokter/hapus/{id}', [AdminDokterController::class,'destroy']);
+        Route::post('dokter/update/{id}', [AdminDokterController::class, 'updates']);
+        Route::get('dokter/hapus/{id}', [AdminDokterController::class, 'destroy']);
     });
 });
 
 
-Route::middleware(['role:pasien'])->group(function () {  
+Route::middleware(['role:pasien'])->group(function () {
     Route::prefix('pasien')->group(function () {
         Route::get('/dashboard', function () {
             return view('pasien.dashboard');
         });
-Route::get('profil-pasien', [AuthController::class, 'profil_pasien']);
-Route::post('profil_pasien_update/{id}', [AuthController::class, 'profil_pasien_update']);
-
-
+        Route::get('profil-pasien', [AuthController::class, 'profil_pasien']);
+        Route::post('profil_pasien_update/{id}', [AuthController::class, 'profil_pasien_update']);
     });
 });
 
 
-Route::middleware(['role:dokter'])->group(function () {  
+Route::middleware(['role:dokter'])->group(function () {
     Route::prefix('dokter')->group(function () {
         Route::get('/dashboard', function () {
             return view('dokter.dashboard');
         });
+
+        Route::get('profil-dokter', [AuthController::class, 'profil_dokter']);
+        Route::post('profil_dokter_update/{id}', [AuthController::class, 'profil_dokter_update']);
     });
 });
 
@@ -76,8 +78,12 @@ Route::post('proses-pemesanan', [PasienController::class, 'prosesbooking']);
 Route::get('pemesanan-pending', [PasienController::class, 'bookingpending'])->name('pemesanan-pending');
 Route::get('pemesanan-cancel/{id}', [PasienController::class, 'bookingcancel'])->name('pemesanan-cancel');
 
-//LOGIN
-// Route::get('/login', function () {
-//     return view('login');
-// });
+
+    Route::resource('dokter/jadwal_praktiks', JadwalPraktikDokterController::class);
+    Route::post('dokter/jadwal_praktik/update/{id}', [JadwalPraktikDokterController::class, 'updates']);
+    Route::get('dokter/jadwal_praktik/{id_dokter}', [JadwalPraktikDokterController::class, 'index_jadwal']);
+    Route::get('dokter/jadwal_praktik/{id_dokter}', [JadwalPraktikDokterController::class, 'index_jadwal']);
+    Route::get('dokter/jadwal_praktik/create/{id}', [JadwalPraktikDokterController::class, 'create']);
+    Route::get('dokter/jadwal_praktik/update/{id}', [JadwalPraktikDokterController::class, 'updates']);
+    Route::get('dokter/jadwal_praktik/hapus/{id}', [JadwalPraktikDokterController::class, 'destroy']);
 

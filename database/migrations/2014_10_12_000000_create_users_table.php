@@ -33,14 +33,14 @@ return new class extends Migration
             'profil'=>'profil.jpg'
         ]);
         User::create([
-            'nama' => 'Passien',
+            'nama' => 'Pasien Elen',
             'role'=>'pasien',
             'email'=>'pasien@gmail.com',
             'password'=>bcrypt(123),
             'profil'=>'profil.jpg'
         ]);
         User::create([
-            'nama' => 'Dokter',
+            'nama' => 'Dokter Anam',
             'role'=>'dokter',
             'email'=>'dokter@gmail.com',
             'password'=>bcrypt(123),

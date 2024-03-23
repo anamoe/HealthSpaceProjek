@@ -26,12 +26,12 @@
         </li>
 
            <!-- Dashboard -->
-           <li class="menu-item {{ request()->is('admin/poli') ? 'active' : ''  }} ">
+           <!-- <li class="menu-item {{ request()->is('admin/poli') ? 'active' : ''  }} ">
             <a href="{{url('admin/poli')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-first-aid"></i>
                 <div>Poli</div>
             </a>
-        </li>
+        </li> -->
 
            <!-- Dashboard -->
            <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
