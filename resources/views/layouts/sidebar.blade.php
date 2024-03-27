@@ -2,7 +2,7 @@
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{asset('assets/img/icon.png')}}" alt="" width="25" height="25" class="my-3" >
+                <img src="{{asset('login_assets/img/hslogo.png')}}" alt="" width="25" height="25" class="my-3" >
             </span>
             <span class="app-brand-text demo menu-text fw-bolder ms-2">Space Health</span>
         </a>
