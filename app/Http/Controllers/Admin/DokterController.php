@@ -43,8 +43,8 @@ class DokterController extends Controller
         $data = $request->validate([
             'spesialis'=>'required',
             'poli_id'=>'required',
-            'hari_praktik'=>'required',
-            'jam_praktik'=>'required',
+            // 'hari_praktik'=>'required',
+            // 'jam_praktik'=>'required',
         
         ]);
 
@@ -81,8 +81,7 @@ class DokterController extends Controller
         $data = $request->validate([
             'spesialis'=>'required',
             'poli_id'=>'required',
-            // 'hari_praktik'=>'required',
-            // 'jam_praktik'=>'required',
+ 
         
         ]);
 
