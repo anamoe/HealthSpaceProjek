@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pasien\PasienController;
+use App\Http\Controllers\Pasien\DashboardPasienController;
 use App\Http\Controllers\Pasien\KonsultasiController as KonsultasiPasienController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -57,13 +58,13 @@ Route::middleware(['role:admin'])->group(function () {
 
 Route::middleware(['role:pasien'])->group(function () {
     Route::prefix('pasien')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('pasien.dashboard');
-        });
+        Route::get('/dashboard',[DashboardPasienController::class,'index']);
         Route::get('profil-pasien', [AuthController::class, 'profil_pasien']);
         Route::post('profil_pasien_update/{id}', [AuthController::class, 'profil_pasien_update']);
 
         Route::get('konsultasi',[KonsultasiPasienController::class,'index']);
+        Route::post('pemesanan',[DashboardPasienController::class,'pemesanan']);
+        Route::get('pemesanan/{id}',[DashboardPasienController::class,'pemesanan_view']);
     });
 });
 

@@ -1,6 +1,8 @@
 
 
   <div class="content-wrapper">
+
+  @midtransCardScript
    
     <!-- Main content -->
     <section class="content">

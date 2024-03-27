@@ -24,10 +24,10 @@
                     <div class="card ">
                         <img class="card-img-top shadow" src="{{url('profil/profil.jpg')}}" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">Nama Dokter</h5>
+                            <h5 class="card-title nama_dokter">Nama Dokter</h5>
                             <p class="card-text">
-                                Spesialist Terapi
-                                <span class="float-end fw-bold">Rp 20.000</span>
+                                <span class="spesialist">Spesialist Terapi</span>
+                                <span class="float-end fw-bold biaya_layanan">Rp 20.000</span>
                             </p>
 
                             <h6>Jadwal Praktik</h6>
@@ -42,12 +42,39 @@
 
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-success-dark" data-bs-dismiss="modal">Chat</button>
+                    <button type="button" class="btn btn-success-dark bookingchat" data-bs-dismiss="modal">Chat</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal View Dokter -->
+
+    <!-- Modal View  Order Konsultasi -->
+    <div class="modal fade" id="modalOrderView" tabindex="-1" aria-labelledby="modalOrderViewLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{url('pasien/pemesanan')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
+
+                        <input type="text" class="d-none" name="dokter_id">
+                        <div class="form-group">
+                            <label for="">Nama Konsultasi</label>
+                            <input type="text" class="form-control" name="konsultasi" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="submit" class="btn btn-success-dark">Chat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal View  Order Konsultasi -->
 
     <div class="card bg-success-dark px-5 py-2 text-white">
         <div class="d-flex justify-content-between gap-1">
@@ -114,17 +141,19 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <div class="col-md-3 mb-3 dokter-list" onclick="viewdokter()">
+                        @foreach($datadokter as $dokter)
+                        <div class="col-md-3 mb-3 dokter-list" onclick="viewdokter({{$dokter}})">
                             <div class="card h-100">
                                 <img class="card-img-top" src="{{url('profil/profil.jpg')}}" alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center">Nama Dokter</h5>
+                                    <h5 class="card-title text-center">{{$dokter->nama}}</h5>
                                     <p class="card-text text-center">
                                         Buka Praktik : 09.00 - 17.00
                                     </p>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
 
                     </div>
                 </div>
@@ -141,8 +170,26 @@
 
 @push('js')
 <script>
-    let viewdokter = () => {
+    let formatRupiah = (angka) => {
+        let rupiahFormat = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(angka);
+        return rupiahFormat;
+    }
+
+    let viewdokter = (dokter) => {
+        $(".nama_dokter").html(dokter.nama)
+        $(".biaya_layanan").html(formatRupiah(dokter.biaya_layanan))
+        $('.bookingchat').attr('onClick', `vieworder(${dokter.id})`);
         $("#modalView").modal('show')
+    }
+
+    let vieworder = (id) => {
+        $("#modalOrderView [name='dokter_id']").val(id)
+        $("#modalView").modal('hide')
+        $("#modalOrderView").modal('show')
     }
 </script>
 @endpush

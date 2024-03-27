@@ -65,7 +65,7 @@ class PasienController extends Controller
         // return $params['transaction_details']['order_id'];
 
         $snap = \Midtrans\Snap::createTransaction($params);
-       
+
 
         $book = new Pembayaran();
 
@@ -103,7 +103,7 @@ class PasienController extends Controller
         $status = Pembayaran::
         leftjoin('konsuls','pembayarans.konsul_id','konsuls.id')
         ->select('konsuls.pasien_id','pembayarans.*')
-        ->where('status_pembayaran','pending')->where('pasien_id',$p->id)->orderBy('id', 'DESC')->first();
+        ->where('status_pembayaran','pending')->where('konsuls.pasien_id',7)->orderBy('id', 'DESC')->first();
 
     
          return view('pasien.pemesanan_pending',compact('status'));
