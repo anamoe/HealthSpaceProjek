@@ -39,24 +39,6 @@
 </div>
 
 
-            <div class="form-group">
-                <label for="" class="form-label">Hari Praktik</label>
-                <select name="hari_praktik" class="form-control">
-                    <option value="senin" {{ $data->hari_praktik == 'senin' ? 'selected' : '' }}>Senin</option>
-                    <option value="selasa" {{ $data->hari_praktik == 'selasa' ? 'selected' : '' }}>Selasa</option>
-                    <option value="rabu" {{ $data->hari_praktik == 'rabu' ? 'selected' : '' }}>Rabu</option>
-                    <option value="kamis" {{ $data->hari_praktik == 'kamis' ? 'selected' : '' }}>Kamis</option>
-                    <option value="jumat" {{ $data->hari_praktik == 'jumat' ? 'selected' : '' }}>Jumat</option>
-                    <option value="sabtu" {{ $data->hari_praktik == 'sabtu' ? 'selected' : '' }}>Sabtu</option>
-                    <option value="minggu" {{ $data->hari_praktik == 'minggu' ? 'selected' : '' }}>Minggu</option>
-                </select>
-
-            </div>
-            <div class="form-group">
-                <label for="" class="form-label">Jam Praktik</label>
-                <input type="time" class="form-control @error('jam_praktik') is-invalid @enderror" name="jam_praktik"value="{{$data->jam_praktik}}">
-            </div>
-
 
 
             <button type="submit" class="btn btn-success float-end mt-3">Update</button>

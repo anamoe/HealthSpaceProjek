@@ -1,6 +1,4 @@
-@extends('layouts.pemesan.pemesan_status_booking_app')
 
-@section('content')
 
   <div class="content-wrapper">
    
@@ -25,7 +23,7 @@
                 
                 <h1>Menunggu Pembayaran</h1>
                 <br><br>
-                @foreach($statusbooking as $status)
+            x
                 <div class="row">
                   <div class="col-lg-6">
                       <div class="card-body p-0">
@@ -38,12 +36,12 @@
 
                         
                           </table><br>
-                          <a href="{{route('pemesan-deletebooking',$status->id)}}"><button class="btn btn-danger">Batalkan Booking</button></a>
+                          <a href="{{route('pemesanan-cancel',$status->id)}}"><button class="btn btn-danger">Batalkan Booking</button></a>
                           <a href="{{$status->payment_url}}"> <button class="btn btn-primary">Bayar Sekarang</button></a><br><br>
                       </div><br>
                     </div>
                   </div>     
-                @endforeach
+             
 
                
               </div>
@@ -56,9 +54,7 @@
          
     <!-- /.content -->
   </div>
- @endsection
 
- @section('js')
 
  <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-bDo4QQ4exVny80Af"></script>
 
@@ -82,4 +78,3 @@
             };
         </script>
 
-@endsection

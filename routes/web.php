@@ -33,6 +33,13 @@ Route::get('register', function () {
 
 Route::post('postlogin', [AuthController::class, 'postlogin']);
 Route::post('postregister', [AuthController::class, 'postregister']);
+Route::group(['middleware' => ['web']], function () {
+    Route::get('login-google/callback', [AuthController::class, 'handleGoogleCallback']);
+    Route::get('login-google', [AuthController::class, 'handleGoogleCallback']);
+});
+Route::get('login-google-auth', [AuthController::class, 'redirectToProvider']);
+    Route::get('login-google-auth/callback', [AuthController::class, 'handleProviderCallback']);
+
 Route::get('logout', [AuthController::class, 'logout']);
 
 

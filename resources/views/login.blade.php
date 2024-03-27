@@ -57,13 +57,13 @@
                 </div> -->
                 <!-- end section Checkbox -->
                 <input type="submit" value="SIGN IN" class="btn">
-                <!-- <p class="social-text">Or Sign in with </p>
+                <p class="social-text">Or Sign in with </p>
                 <div class="social-media">
-                    <a href="" class="social-icon">
+                    <a href="{{url('login-google-auth')}}" class="social-icon">
                         <i class="fab fa-google"></i>
                     </a>
                 </div>
-                <a href="/homepage" class="small text-muted">Klinik Fanda Berkat Medika Panti</a> -->
+                <!-- <a href="/homepage" class="small text-muted">Klinik Fanda Berkat Medika Panti</a> -->
             </form>
             <form action="" method="post" class="sign-up-form">
    

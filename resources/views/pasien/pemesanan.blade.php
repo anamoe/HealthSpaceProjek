@@ -37,12 +37,7 @@
                         {{csrf_field()}}
 
                         
-                            <div class="form-group">
-                                <label for="tanggal_booking">Tanggal Booking</label>
-                                <input type="date" class="form-control" id="tanggal_booking" name="tanggal_booking" required="" />
-                            </div>
 
-<!--  -->
 
                         
                          

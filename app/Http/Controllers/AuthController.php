@@ -7,10 +7,13 @@ use App\Models\Pasien;
 use App\Models\Poli;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
+
 
 class AuthController extends Controller
 {
@@ -260,5 +263,89 @@ class AuthController extends Controller
         ->with('success',' Profil Pasien Berhasil Diupdate');
 
     }
+
+
+
+    public function handleGoogleCallback()
+{
+    $googleUser = Socialite::driver('google')->user();
+
+    // Cek apakah pengguna sudah ada dalam database
+    $user = User::where('email', $googleUser->email)->first();
+
+    if (!$user) {
+        // Jika pengguna belum ada, buat pengguna baru
+        $user = User::create([
+            'nama' => $googleUser->name,
+            'email' => $googleUser->email,
+            'role' =>'pasien',
+            // Tambahkan kolom lain sesuai kebutuhan
+        ]);
+
+        Pasien::create([
+            'user_id'=>$user->id
+        ]);
+    }
+
+    // Login pengguna
+    Auth::login($user);
+
+    return redirect('/pasien/dashboard')->with('success', 'Berhasil Login');
+   
+}
+
+
+public function redirectToProvider()
+{
+    return Socialite::driver('google')->redirect();
+}
+public function handleProviderCallback()
+{
+    try {
+
+        $user = Socialite::driver('google')->user();
+
+        $finduser = User::where('gauth_id', $user->id)->first();
+
+        if($finduser){
+
+            Auth::login($finduser);
+
+            return redirect('/pasien/dashboard')->with('success', 'Berhasil Login');
+
+        }else{
+            // $newUser = User::create([
+            //     'name' => $user->name,
+            //     'email' => $user->email,
+            //     'gauth_id'=> $user->id,
+            //     'gauth_type'=> 'google',
+              
+            //     'password' => encrypt('admin@123')
+            // ]);
+
+            $user = User::create([
+                'nama' => $user->name,
+                'email' => $user->email,
+                'role' =>'pasien',
+                'gauth_id'=> $user->id,
+                'gauth_type'=> 'google',
+                'password' => bcrypt(123),
+                'role'=>'pasien',
+                // Tambahkan kolom lain sesuai kebutuhan
+            ]);
+    
+            Pasien::create([
+                'user_id'=>$user->id
+            ]);
+
+            Auth::login($user);
+
+            return redirect('/pasien/dashboard')->with('success', 'Berhasil Login');
+        }
+
+    } catch (Exception $e) {
+        dd($e->getMessage());
+    }
+}
 
 }

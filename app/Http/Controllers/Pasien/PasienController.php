@@ -62,16 +62,19 @@ class PasienController extends Controller
                 'duration' => 7,
             ],
         ];
-
+        // return $params['transaction_details']['order_id'];
 
         $snap = \Midtrans\Snap::createTransaction($params);
+       
 
         $book = new Pembayaran();
 
-        $book->tanggal_pembayaran = $request->input('tanggal_booking');
-        $book->pasien_id =$Pasien->id;
+        // $book->tanggal_pembayaran = $request->input('tanggal_booking');
+        // $book->pasien_id =$Pasien->id;
+        $book->jumlah_pembayaran =$params['transaction_details']['gross_amount'];
         $book->konsul_id = '1';
-        $book->status_pemesanan = $request->input('status_pemesanan','pending');
+        $book->kode_pembayaran = $params['transaction_details']['order_id'];
+        $book->status_pembayaran = $request->input('status_pembayaran','pending');
         $book->payment_token = $snap->token;
         $book->payment_url = $snap->redirect_url;
         $book->save();
@@ -80,70 +83,38 @@ class PasienController extends Controller
 
 
 		// alert()->success('Berhasil','Menambahkan Data Profil');
-		return redirect()->route('pemesan-bookingpending', $last_id)->with(['success' => 'Booking Berhasil']);
+		return redirect()->route('pemesanan-pending', $last_id)->with(['success' => 'Booking Berhasil']);
 
     }
 
-    public function index(Request $request)
-    {
+        public function bookingcancel($id){
 
-        //melalkukan pengecekan status pembayaran
-        $p = Pembayaran::where('user_id', auth()->user()->id)->first();
-        if ($p->pembayaran == 'terbayar') {
-            //jika terbayar ke halaman pendaftaran isi form atau bisa di ubah
+        Pembayaran::where('id',$id)->first()->update([
+            'status_pembayaran'=>'cancel'
+        ]);
+        return redirect('/pemesanan')->with('success', 'Berhasil Membatalkan');
+}
 
-           return 'bayar wes';
-        } else {
-            //jika belum maka melakukan konfig auth  buat merubah status
-            $p = Pembayaran::where('user_id', auth()->user()->id)->first();
-            $pasien = Pasien::where('user_id', auth()->user()->id)->first();
+    public function bookingpending(){
 
-            // Set your Merchant Server Key
-            \Midtrans\Config::$serverKey = 'SB-Mid-server-nF0FfCZfWF7W4OeOxvs1ZqA3';
-            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-            \Midtrans\Config::$isProduction = false;
-            // Set sanitization on (default)
-            \Midtrans\Config::$isSanitized = true;
-            // Set 3DS transaction for credit card to true
-            \Midtrans\Config::$is3ds = true;
-            $order_id = Str::random(5);
 
-            $p->update([
-                'pembayaran' => 'menunggu pembayaran',
-                'order_id' => $order_id,
-            ]);
-            $params = array(
-                'transaction_details' => array(
-                    'order_id' => $p->order_id,
-                    // 'order_id' => $order_id,
+        $p = Pasien::where('user_id',auth()->user()->id)->first();
+    
+        $status = Pembayaran::
+        leftjoin('konsuls','pembayarans.konsul_id','konsuls.id')
+        ->select('konsuls.pasien_id','pembayarans.*')
+        ->where('status_pembayaran','pending')->where('pasien_id',$p->id)->orderBy('id', 'DESC')->first();
 
-                    'gross_amount' => 300000,
-                ),
-                'customer_details' => array(
-                    'first_name' => auth()->user()->name,
-                    'last_name' => '',
-                    'email' => auth()->user()->email,
-                    'phone' => $pasien->no_telp,
-                ),
-            );
+    
+         return view('pasien.pemesanan_pending',compact('status'));
+   
+   
+}
 
 
 
-                //bentuk cart yang akan dikirim ke midtrans
-            $snapToken = \Midtrans\Snap::createTransaction($params);
-            // return $snapToken;
-            //kembalian nilai token untuk melakukaan pembayaran
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
-            // return $snapToken;
-
-            return view('paymentgateway', ['snap_token' => $snapToken]);
-        }
-    }
-
-
-    public function payment_post(Request $request)
-    {
-        //setting key server midtrans ya
+public function notification_payment(Request $request){
+     //setting key server midtrans ya
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = 'SB-Mid-server-nF0FfCZfWF7W4OeOxvs1ZqA3';
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
@@ -158,32 +129,32 @@ class PasienController extends Controller
         //melakukan parsing response dari midtrans
         $notification = json_decode($payload);
         // $json = json_decode($request->get('json')); //nama json dipanggil dari token yg awto kepanggil dari API
-        // $order = new Siswa();
 
+    // return $notification->transaction_status;
 
         //melakukan pengecekan status transaksi
+        // return $notification->va_numbers[0]->bank;
         if ($notification->transaction_status == "settlement") {
+            $p = Pembayaran::where('kode_pembayaran', $notification->order_id)->first();
 
-            //mencari siswa berdasarkan order_id
-            $p = Pembayaran::where('order_id', $notification->order_id)->first();
+            $p->update([
+                'status_pembayaran' => 'sukses',
+                'tanggal_pembayaran' => date('Y-m-d'),
+                'metode_pembayaran'=>$notification->va_numbers[0]->bank
 
-            //melakukan update pada siswa
-            $c = [
-                'pembayaran' => 'terbayar',
-                'transaction_id' => $notification->transaction_id,
-                // 'order_id' => $notification->order_id,
-            ];
-            //update pada siswa
-            $p->update($c);
+            ]);
             // dd($notification);
+            return $p;
 
-            // return redirect('/siswa/create')->with('success', 'Pembayaran Berhasil');
         } else {
             //selain settlemned menunggu untuk melakukan pembayaran
             return 'menunggu pembayaran';
         }
 
 
-    }
+}
 
+public function return(){
+    return 'sukses bayar !!!';
+}
 }
