@@ -30,6 +30,11 @@
             </div> 
 
             <div class="form-group">
+                <label for="" class="form-label">Biaya Layanan</label>
+                <input type="text" class="form-control @error('biaya_layanan') is-invalid @enderror" name="biaya_layanan">
+            </div>
+
+            <div class="form-group">
                 <label for="" class="form-label">Poli</label>
                 <select name="poli_id" class="form-control">
                     @foreach($poli as $v)

@@ -12,7 +12,7 @@
         <form action="{{url('admin/dokter/update',$id)}}" method="post" enctype="multipart/form-data">
             @csrf
 
-             <div class="form-group">
+            <div class="form-group">
                 <label for="" class="form-label">Nama</label>
                 <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" value="{{$data->nama}}">
             </div>
@@ -23,20 +23,26 @@
             <div class="form-group">
                 <label for="" class="form-label">Password</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
-            </div> 
+            </div>
             <div class="form-group">
                 <label for="" class="form-label">Spesialis</label>
                 <input type="text" class="form-control @error('spesialis') is-invalid @enderror" name="spesialis" value="{{$data->spesialis}}">
-            </div> 
+            </div>
 
             <div class="form-group">
-    <label for="" class="form-label">Poli</label>
-    <select name="poli_id" class="form-control">
-        @foreach($poli as $v)
-            <option value="{{ $v->id }}" {{ $v->id == $data->poli_id ? 'selected' : '' }}>{{ $v->nama_poli }}</option>
-        @endforeach
-    </select>
-</div>
+                <label for="" class="form-label">Poli</label>
+                <select name="poli_id" class="form-control">
+                    @foreach($poli as $v)
+                    <option value="{{ $v->id }}" {{ $v->id == $data->poli_id ? 'selected' : '' }}>{{ $v->nama_poli }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="form-label">Biaya Layanan</label>
+                <input type="number" class="form-control @error('biaya_layanan') is-invalid @enderror" value="{{$data->biaya_layanan}}" name="biaya_layanan">
+            </div>
+
 
 
 
