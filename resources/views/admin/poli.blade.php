@@ -4,11 +4,37 @@
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
+<!-- Modal Add  -->
+<div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAddLabel">Add</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+            @csrf
+            <div class="form-group">
+                <label for="">Nama Poli</label>
+                <input type="text" class="form-control" name="nama_poli">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Add  -->
+
     <div class="card">
 
         <div class="card-header bg-success-dark">
             <h6 class="card-title text-white">Poli
-                <button class="btn btn-sm btn-primary float-end">Add</button>
+                <button class="btn btn-sm btn-primary float-end" onclick="add()">Add</button>
             </h6>
         </div>
 
@@ -56,3 +82,11 @@
 </div>
 
 @endsection
+
+@push('js')
+<script>
+    let add = ()=>{
+        $("#modalAdd").modal('show')
+    }
+</script>
+@endpush

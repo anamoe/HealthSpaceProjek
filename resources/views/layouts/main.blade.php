@@ -31,6 +31,7 @@
     <script src="{{asset('admin_theme/assets/js/config.js')}}"></script>
 
     <link rel="stylesheet" href="{{asset('toastr/toastr.min.css') }}">
+    @stack('css')
 
 </head>
 
@@ -192,7 +193,7 @@
     <script src="{{asset('admin_theme/assets/js/main.js')}}"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-    <script src="{{asset('admin_theme/assets/vendor/js/app-chat.js')}}"></script>
+    
 
     
     <!-- pesan cardeee -->
@@ -209,6 +210,8 @@
         toastr.error('{{session()->get("error")}}')
     @endif
 </script>
+
+@stack('js')
 
 </body>
 

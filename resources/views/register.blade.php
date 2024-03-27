@@ -1,92 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
+    data-template="vertical-menu-template-free">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" href="login_assets/style.css">
-    <link rel="stylesheet" href="{{asset('toastr/toastr.min.css')}}">
-    <title>HEALTHSPACE</title>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Login</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{asset('admin_theme/assets/vendor/fonts/boxicons.css')}}" />
+    <link rel="stylesheet" href="{{asset('admin_theme/assets/vendor/css/core.css')}}"
+        class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{asset('admin_theme/assets/vendor/css/theme-default.css')}}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{asset('admin_theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+    <script src="{{asset('admin_theme/assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{asset('admin_theme/assets/js/config.js')}}"></script>
+
+    <link rel="stylesheet" href="{{asset('toastr/toastr.min.css') }}">
+
+    <style>
+        input[type="text"] {
+            border-top: 0;
+            border-right: 0;
+            border-left: 0;
+
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .btn-success {
+            background-color: #31534C;
+            border-color: #31534C;
+        }
+    </style>
+
 </head>
 
 <body>
+
+
     <div class="container">
-        <div class="signin-signup">
-            <form action="{{url('postregister')}}" method="post" class="sign-in-form">
-                @csrf
-                @if(session()->has('message'))
-                <div class="toastrDefaultSuccess" role="alert" id="notif">
-                </div>
-                @endif
 
-                @if(session()->has('error'))
-                <div class="alert alert-danger" role="alert" id="notif">
-                    <span data-notify="icon" class="fa fa-bell"></span>
-                    <span data-notify="title">Gagal</span> <br>
-                    <span data-notify="message">{{session()->get('error')}}</span>
+        <div class="card my-5">
+            <div class="d-flex flex-row">
+                <div class="w-50 d-flex align-items-center justify-content-center" style="background-color : #31534C;">
+                    <img src="{{asset('login_assets/img/logo.png')}}" width="200" alt="">
                 </div>
-                @endif
-                @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
-                    <strong>Gagal !</strong>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-                
-                <h4 class="title">Selamat Datang di</h4>
-                <h4 class="title">HealthSpace</h4>
-                <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Email" name="email">
-                </div>
+                <div class="w-50 py-5 px-3">
+                    <div class="container px-5">
+                        <h2 class="text-center fw-bold mb-0">Selamat Datang di</h2>
+                        <h2 class="text-center fw-bold mt-0">Healthspace</h2>
+                        <a href="{{url('login-google-auth')}}" class="btn btn-white border mx-auto d-block w-50 w mb-5">
+                            <img src="https://cdn-icons-png.flaticon.com/256/2702/2702602.png" alt="" width="30">
+                            Sign Up With Google
+                        </a>
+                        <form action="{{url('postregister')}}" method="post">
+                            @csrf
+                            @if(session()->has('message'))
+                            <div class="toastrDefaultSuccess" role="alert" id="notif">
+                            </div>
+                            @endif
 
-                <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" name="password">
-                </div>
-             
-                <input type="submit" value="SIGN UP" class="btn">
-               
-            </form>
-            <form action="{{url('postregister')}}" method="post" class="sign-up-form">
-              
-              
-        
-            </form>
-        </div>
-        <div class="panels-container">
-            <div class="panel left-panel">
-                <div class="content">
-                    <h3>Sudah Punya Akun?</h3>
-                    <p></p>
-                    <img src="login_assets/img/logo.png" alt="" class="image">
-                    <button class="btn" id="sign-in-btn">Sign in</button>
-                </div>
+                            @if(session()->has('error'))
+                            <div class="alert alert-danger" role="alert" id="notif">
+                                <span data-notify="icon" class="fa fa-bell"></span>
+                                <span data-notify="title">Gagal</span> <br>
+                                <span data-notify="message">{{session()->get('error')}}</span>
+                            </div>
+                            @endif
+                            @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                                <strong>Gagal !</strong>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="email" class="form-control" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Password</label>
+                                <input type="password" class="form-control" name="password">
+                            </div>
+                            <div class="d-flex justify-content-between mt-4 mb-5">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="remember-me">
+                                    <label class="form-check-label" for="remember-me">
+                                        Remember Me
+                                    </label>
+                                </div>
+                                <button class="btn btn-success px-5" type="submit">Sign Up</button>
+                            </div>
 
-            </div>
-            <div class="panel right-panel">
-                <div class="content">
-                    <h3>Belum Punya Akun?</h3>
-                    <p></p>
-                    <img src="login_assets/img/logo.png" alt="" class="image">
-                  
-                    <a href="{{url('login')}}">  <button  class="btn" id="">Sign In</button></a>
+                            <button type="button" class="bg-white float-end border rounded-circle px-3 py-3">
+                                <i class='bx bx-chat'></i>
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script src="login_assets/js/login.js"></script>
-    <script src="{{asset('toastr/toastr.min.js')}}"></script>
-   
-    
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{{asset('admin_theme/assets/vendor/libs/jquery/jquery.js')}}"></script>
+    <script src="{{asset('admin_theme/assets/vendor/libs/popper/popper.js')}}"></script>
+    <script src="{{asset('admin_theme/assets/vendor/js/bootstrap.js')}}"></script>
+    <script src="{{asset('admin_theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    <script src="{{asset('admin_theme/assets/vendor/js/menu.js')}}"></script>
+    <script src="{{asset('admin_theme/assets/js/main.js')}}"></script>
+
+
+
+
 </body>
 
 </html>

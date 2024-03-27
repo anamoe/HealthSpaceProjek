@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Pasien\PasienController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pasien\PasienController;
+use App\Http\Controllers\Pasien\KonsultasiController as KonsultasiPasienController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PoliController as AdminPoliController;
@@ -61,6 +62,8 @@ Route::middleware(['role:pasien'])->group(function () {
         });
         Route::get('profil-pasien', [AuthController::class, 'profil_pasien']);
         Route::post('profil_pasien_update/{id}', [AuthController::class, 'profil_pasien_update']);
+
+        Route::get('konsultasi',[KonsultasiPasienController::class,'index']);
     });
 });
 

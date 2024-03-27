@@ -2,7 +2,7 @@
     <div class="app-brand demo">
         <a href="index.html" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{asset('login_assets/img/hslogo.png')}}" alt="" width="25" height="25" class="my-3" >
+                <img src="{{asset('login_assets/img/hslogo.png')}}" alt="" width="25" height="25" class="my-3">
             </span>
             <span class="app-brand-text demo menu-text fw-bolder ms-2">Space Health</span>
         </a>
@@ -16,7 +16,7 @@
 
     <ul class="menu-inner py-1">
 
-    @if(auth()->user()->role == 'admin')
+        @if(auth()->user()->role == 'admin')
         <!-- Dashboard -->
         <li class="menu-item {{ request()->is('admin/dashboard') ? 'active' : ''  }}">
             <a href="{{url('admin/dashboard')}}" class="menu-link">
@@ -25,24 +25,42 @@
             </a>
         </li>
 
-           <!-- Dashboard -->
-           <!-- <li class="menu-item {{ request()->is('admin/poli') ? 'active' : ''  }} ">
+        <!-- Dashboard -->
+        <!-- <li class="menu-item {{ request()->is('admin/poli') ? 'active' : ''  }} ">
             <a href="{{url('admin/poli')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-first-aid"></i>
                 <div>Poli</div>
             </a>
         </li> -->
 
-           <!-- Dashboard -->
-           <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
+        <!-- Dashboard -->
+        <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
             <a href="{{url('admin/dokter')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-git-repo-forked"></i>
                 <div>Dokter</div>
             </a>
         </li>
 
-    @endif
+        @endif
 
-        
+        @if(auth()->user()->role == 'pasien')
+        <li class="menu-item {{ request()->is('pasien/dashboard') ? 'active' : ''  }}">
+            <a href="{{url('pasien/dashboard')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ request()->is('pasien/konsultasi') ? 'active' : ''  }}">
+            <a href="{{url('pasien/konsultasi')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-chat"></i>
+                <div>Konsultasi</div>
+            </a>
+        </li>
+
+    
+        @endif
+
+
     </ul>
 </aside>

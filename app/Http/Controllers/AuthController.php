@@ -301,9 +301,10 @@ public function redirectToProvider()
 }
 public function handleProviderCallback()
 {
+
     try {
 
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
 
         $finduser = User::where('gauth_id', $user->id)->first();
 
@@ -331,6 +332,7 @@ public function handleProviderCallback()
                 'gauth_type'=> 'google',
                 'password' => bcrypt(123),
                 'role'=>'pasien',
+                'profile'=>'profil.jpg'
                 // Tambahkan kolom lain sesuai kebutuhan
             ]);
     

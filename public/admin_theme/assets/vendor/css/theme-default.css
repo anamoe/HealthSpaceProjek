@@ -111,6 +111,13 @@
   background-color: #31534C !important;
 }
 
+.btn-success-dark{
+    color: #fff;
+    border-color: #31534C !important;
+    background-color: #31534C !important;
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+}
+
 .text-success-dark{
   color: #31534C !important;
 }
