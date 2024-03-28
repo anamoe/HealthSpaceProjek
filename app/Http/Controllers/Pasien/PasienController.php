@@ -28,7 +28,6 @@ class PasienController extends Controller
 	\Midtrans\Config::$is3ds = true;
     }
 
-
     public function prosesbooking(Request $request){
 
         $this->initPaymentGateway();
