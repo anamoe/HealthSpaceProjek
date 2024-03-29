@@ -229,18 +229,20 @@
 
         <div class="row">
 
+        @foreach($dokter as $v)
           <div class="col-lg-6">
             <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/testimonials/7.png" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="{{$v->profil}}" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Dr. Faiqotul Munawaroh</h4>
+                <h4>{{$v->nama}}</h4>
                 <span></span>
                 <br> 
-                <p>Poli Umum</p>
+                <p>{{$v->nama_poli}}</p>
               </div>
             </div>
           </div>
-
+          @endforeach
+<!-- 
           <div class="col-lg-6 mt-4 mt-lg-0">
             <div class="member d-flex align-items-start">
               <div class="pic"><img src="assets/img/testimonials/8.png" class="img-fluid" alt=""></div>
@@ -251,7 +253,7 @@
                 <p>Poli Gigi</p>
               </div>
             </div>
-          </div>
+          </div> -->
 
         </div>  
 
