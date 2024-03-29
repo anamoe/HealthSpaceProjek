@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\DaftarInvoiceController;
+use App\Http\Controllers\Admin\DaftarKonsultasiController;
+use App\Http\Controllers\Admin\DaftarPasienController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pasien\PasienController;
@@ -10,6 +13,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PoliController as AdminPoliController;
 use App\Http\Controllers\Admin\DokterController as AdminDokterController;
 use App\Http\Controllers\Dokter\JadwalPraktikDokterController;
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -22,12 +26,14 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('chart', [AuthController::class, 'lineChart']);
 
 //HOMEPAGE
-Route::get('/', function () {
-    return view('homepage');
-});
+// Route::get('/', function () {
+//     return view('homepage');
+// });
+Route::get('/', [LandingPageController::class, 'index']);
+
 Route::get('login', [AuthController::class, 'login']);
 Route::get('register', function () {
     return view('register');
@@ -35,10 +41,12 @@ Route::get('register', function () {
 
 Route::post('postlogin', [AuthController::class, 'postlogin']);
 Route::post('postregister', [AuthController::class, 'postregister']);
-Route::group(['middleware' => ['web']], function () {
-    Route::get('login-google/callback', [AuthController::class, 'handleGoogleCallback']);
-    Route::get('login-google', [AuthController::class, 'handleGoogleCallback']);
-});
+
+// Route::group(['middleware' => ['web']], function () {
+//     Route::get('login-google/callback', [AuthController::class, 'handleGoogleCallback']);
+//     Route::get('login-google', [AuthController::class, 'handleGoogleCallback']);
+// });
+
 Route::get('login-google-auth', [AuthController::class, 'redirectToProvider']);
     Route::get('login-google-auth/callback', [AuthController::class, 'handleProviderCallback']);
 
@@ -49,9 +57,19 @@ Route::middleware(['role:admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::resource('dashboard', AdminDashboardController::class);
         Route::resource('poli', AdminPoliController::class);
+
         Route::resource('dokter', AdminDokterController::class);
         Route::post('dokter/update/{id}', [AdminDokterController::class, 'updates']);
         Route::get('dokter/hapus/{id}', [AdminDokterController::class, 'destroy']);
+
+        Route::resource('daftar-pasien', DaftarPasienController::class);
+        Route::post('daftar-pasien/update/{id}', [DaftarPasienController::class, 'updates']);
+        Route::get('daftar-pasien/hapus/{id}', [DaftarPasienController::class, 'destroy']);
+
+        Route::resource('daftar-konsultasi', DaftarKonsultasiController::class);
+
+        Route::resource('invoice', DaftarInvoiceController::class);
+
     });
 });
 

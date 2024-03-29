@@ -21,8 +21,8 @@ class JadwalPraktikDokterController extends Controller
     {
         //
         $jadwal = JadwalPraktikDokter::where('dokter_id', $id_dokter)->get();
-        $dokter0 = Dokter::where('id',$id_dokter)->first();
-        $dokter = User::where('id',$dokter0->user_id)->first();
+        // $dokter0 = Dokter::where('id',$id_dokter)->first();
+        $dokter = User::where('id',$id_dokter)->first();
         return view('dokter.jadwal_praktik_dokter', compact('jadwal','dokter','id_dokter'));
     }
 

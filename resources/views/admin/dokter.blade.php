@@ -15,7 +15,7 @@
         <div class="card-body">
 
             <div class="table-responsive" style="min-height:180px;">
-                <table class="table">
+                <table class="table" id="tabelku">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -23,7 +23,7 @@
                             <th>Poli</th>
                             <th>Spesialis</th>
                             <th width="25%">Actions</th>
-                            <th width="20%"></th>
+                           
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -33,27 +33,17 @@
                             <td>{{$v->nama}}</td>
                             <td>{{$v->nama_poli}}</td>
                             <td>{{$v->spesialis}}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
+                      
+                                 
+                            <td class="d-flex">
                                         <a class="dropdown-item" href="{{url('admin/dokter/'.$v->id)}}"><i
-                                                class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                class="bx bx-edit-alt me-1"></i> </a>
                                         <a class="dropdown-item" href="{{url('admin/dokter/hapus/'.$v->id)}}"><i
-                                                class="bx bx-trash me-1"></i> Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                          
-                                <a
-                                    href="{{url('dokter/jadwal_praktik',$v->id)}}"><span
+                                                class="bx bx-trash me-1"></i> </a>
+                                                <a
+                                    href="{{url('dokter/jadwal_praktik',$v->user_id)}}"><span
                                         class="badge bg-primary rounded-3 fw-semibold">Jadwal Praktik Dokter</span></a>
-                              
-                           
+                                 
                             </td>
                         </tr>
                         @endforeach

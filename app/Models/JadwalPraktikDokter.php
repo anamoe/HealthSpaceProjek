@@ -9,4 +9,6 @@ class JadwalPraktikDokter extends Model
 {
     use HasFactory;
     protected $guarded =[];
+
+ 
 }

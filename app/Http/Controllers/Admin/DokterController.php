@@ -51,6 +51,9 @@ class DokterController extends Controller
         $user = User::create($data0);
 
         $data['user_id']=$user->id;
+        $data['profil']='doctor.png';
+        
+        
        Dokter::create($data);
    
         
@@ -74,7 +77,8 @@ class DokterController extends Controller
     
         $data0 = $request->validate([
             'nama'=>'required',
-            'email'=>'required',    
+            'email'=>'required',   
+            'poli_id'=>'required', 
         
         ]);
         
@@ -108,7 +112,7 @@ class DokterController extends Controller
         $d =Dokter::where('id',$id)->first();
         if($d){
             $d->delete();
-            User::where('id',$d->user_id)->delete();
+            // User::where('id',$d->user_id)->delete();
         }
         
 

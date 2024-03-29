@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nama',
         'email',
-        'password','role','profil','google_id','gauth_id','gauth_type'
+        'password','role','profil','google_id','gauth_id','gauth_type','poli_id'
     ];
 
     /**
@@ -46,4 +46,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Pasien::class);
     }
+
+   
 }
