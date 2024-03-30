@@ -22,6 +22,10 @@ return new class extends Migration
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profil')->nullable();
+            $table->string('poli_id')->nullable();
+            $table->string('google_id')->nullable();
+            $table->string('gauth_type')->nullable();
+            $table->string('gauth_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -44,7 +48,8 @@ return new class extends Migration
             'role'=>'dokter',
             'email'=>'dokter@gmail.com',
             'password'=>bcrypt(123),
-            'profil'=>'doctor.png'
+            'profil'=>'doctor.png',
+            'poli_id'=>'2'
         ]);
   
     }

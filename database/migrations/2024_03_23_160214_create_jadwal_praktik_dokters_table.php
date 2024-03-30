@@ -16,7 +16,8 @@ return new class extends Migration
     {
         Schema::create('jadwal_praktik_dokters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dokter_id')->constrained();
+            // $table->foreignId('dokter_id')->constrained();
+            $table->bigInteger('dokter_id')->nullable();
             $table->string('hari_praktik');
             $table->string('jam_praktik_awal');
             $table->string('jam_praktik_akhir');

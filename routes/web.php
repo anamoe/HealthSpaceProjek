@@ -12,6 +12,7 @@ use App\Http\Controllers\Pasien\KonsultasiController as KonsultasiPasienControll
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PoliController as AdminPoliController;
 use App\Http\Controllers\Admin\DokterController as AdminDokterController;
+use App\Http\Controllers\Dokter\DashboardDokterController;
 use App\Http\Controllers\Dokter\JadwalPraktikDokterController;
 use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +27,8 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('chart', [AuthController::class, 'lineChart']);
 
-//HOMEPAGE
-// Route::get('/', function () {
-//     return view('homepage');
-// });
+
 Route::get('/', [LandingPageController::class, 'index']);
 
 Route::get('login', [AuthController::class, 'login']);
@@ -41,11 +38,6 @@ Route::get('register', function () {
 
 Route::post('postlogin', [AuthController::class, 'postlogin']);
 Route::post('postregister', [AuthController::class, 'postregister']);
-
-// Route::group(['middleware' => ['web']], function () {
-//     Route::get('login-google/callback', [AuthController::class, 'handleGoogleCallback']);
-//     Route::get('login-google', [AuthController::class, 'handleGoogleCallback']);
-// });
 
 Route::get('login-google-auth', [AuthController::class, 'redirectToProvider']);
     Route::get('login-google-auth/callback', [AuthController::class, 'handleProviderCallback']);
@@ -89,9 +81,9 @@ Route::middleware(['role:pasien'])->group(function () {
 
 Route::middleware(['role:dokter'])->group(function () {
     Route::prefix('dokter')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dokter.dashboard');
-        });
+      
+        Route::get('dashboard', [DashboardDokterController::class, 'index']);
+        
 
         Route::get('profil-dokter', [AuthController::class, 'profil_dokter']);
         Route::post('profil_dokter_update/{id}', [AuthController::class, 'profil_dokter_update']);

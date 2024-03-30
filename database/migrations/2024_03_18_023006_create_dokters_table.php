@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('poli_id')->constrained();
             // $table->string('hari_praktik');
             $table->string('spesialis');
-            // $table->string('jam_praktik');
+            $table->integer('biaya_layanan');
 
             $table->timestamps();
         });
@@ -29,6 +29,7 @@ return new class extends Migration
             'user_id'=>3,
             'poli_id'=>1,
             'spesialis'=>'Jantung',
+            'biaya_layanan'=>30000
         ]);
     }
 

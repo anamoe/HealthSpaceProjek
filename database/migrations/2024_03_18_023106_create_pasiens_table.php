@@ -19,15 +19,21 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('jenis_kelamin')->nullable();
             $table->string('no_telp')->nullable();
-            $table->string('tanggal_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
             $table->string('alamat')->nullable();
-            $table->string('berat_badan')->nullable();
-            $table->string('tinggi_badan')->nullable();
+            $table->integer('berat_badan')->nullable();
+            $table->integer('tinggi_badan')->nullable();
             $table->timestamps();
         });
 
         Pasien::create([
             'user_id'=>2,
+            'jenis_kelamin'=>'Laki-Laki',
+            'no_telp'=>'08213131',
+            'tanggal_lahir'=>'2003-07-07',
+            'alamat'=>'Jakarta',
+            'berat_badan'=>66,
+            'tinggi_badan'=>175
         ]);
     }
 

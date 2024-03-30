@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dokter;
+use App\Models\Konsul;
 use App\Models\Pasien;
 use App\Models\Poli;
 use App\Models\User;
@@ -226,6 +227,7 @@ class AuthController extends Controller
         
         $data0 = $request->validate([
             'nama'=>'required',
+            'poli_id'=>'required'
             // 'email'=>'required',    
         
         ]);
@@ -266,35 +268,6 @@ class AuthController extends Controller
 
 
 
-    public function handleGoogleCallback()
-{
-    $googleUser = Socialite::driver('google')->user();
-
-    // Cek apakah pengguna sudah ada dalam database
-    $user = User::where('email', $googleUser->email)->first();
-
-    if (!$user) {
-        // Jika pengguna belum ada, buat pengguna baru
-        $user = User::create([
-            'nama' => $googleUser->name,
-            'email' => $googleUser->email,
-            'role' =>'pasien',
-            // Tambahkan kolom lain sesuai kebutuhan
-        ]);
-
-        Pasien::create([
-            'user_id'=>$user->id
-        ]);
-    }
-
-    // Login pengguna
-    Auth::login($user);
-
-    return redirect('/pasien/dashboard')->with('success', 'Berhasil Login');
-   
-}
-
-
 public function redirectToProvider()
 {
     return Socialite::driver('google')->redirect();
@@ -315,14 +288,7 @@ public function handleProviderCallback()
             return redirect('/pasien/dashboard')->with('success', 'Berhasil Login');
 
         }else{
-            // $newUser = User::create([
-            //     'name' => $user->name,
-            //     'email' => $user->email,
-            //     'gauth_id'=> $user->id,
-            //     'gauth_type'=> 'google',
-              
-            //     'password' => encrypt('admin@123')
-            // ]);
+      
 
             $user = User::create([
                 'nama' => $user->name,
@@ -332,7 +298,7 @@ public function handleProviderCallback()
                 'gauth_type'=> 'google',
                 'password' => bcrypt(123),
                 'role'=>'pasien',
-                'profile'=>'profil.jpg'
+                'profil'=>'profil.jpg'
                 // Tambahkan kolom lain sesuai kebutuhan
             ]);
     

@@ -17,9 +17,11 @@ return new class extends Migration
         Schema::create('konsuls', function (Blueprint $table) {
             $table->id();
             $table->string('konsultasi');
-            $table->string('tgl_konsultasi');
-            $table->foreignId('pasien_id')->constrained();
-            $table->foreignId('dokter_id')->constrained();
+            $table->date('tgl_konsultasi');
+            // $table->foreignId('pasien_id')->constrained();
+            // $table->foreignId('dokter_id')->constrained();
+            $table->bigInteger('pasien_id')->nullable();
+            $table->bigInteger('dokter_id')->nullable();
 
             $table->timestamps();
         });

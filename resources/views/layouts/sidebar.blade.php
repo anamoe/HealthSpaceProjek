@@ -26,12 +26,26 @@
         </li>
 
         <!-- Dashboard -->
-        <!-- <li class="menu-item {{ request()->is('admin/poli') ? 'active' : ''  }} ">
-            <a href="{{url('admin/poli')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-first-aid"></i>
-                <div>Poli</div>
+        <li class="menu-item {{ request()->is('admin/daftar-pasien') ? 'active' : ''  }} ">
+            <a href="{{url('admin/daftar-pasien')}}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>Daftar Pasien</div>
             </a>
-        </li> -->
+        </li>
+
+        <li class="menu-item {{ request()->is('admin/invoice') ? 'active' : ''  }} ">
+            <a href="{{url('admin/invoice')}}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div>Daftar Invoice</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is('admin/daftar-konsultasi') ? 'active' : ''  }} ">
+            <a href="{{url('admin/daftar-konsultasi')}}" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div>List Konsultasi</div>
+            </a>
+        </li>
+
 
         <!-- Dashboard -->
         <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
@@ -55,6 +69,14 @@
             <a href="{{url('pasien/konsultasi')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-chat"></i>
                 <div>Konsultasi</div>
+            </a>
+        </li>
+        @endif
+        @if(auth()->user()->role == 'dokter')
+        <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
+            <a href="{{url('admin/dokter')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-chat"></i>
+                <div>Chat Pasien</div>
             </a>
         </li>
 
