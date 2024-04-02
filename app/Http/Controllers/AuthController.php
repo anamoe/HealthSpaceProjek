@@ -235,7 +235,7 @@ class AuthController extends Controller
         $data = $request->validate([
             // 'hari_praktik'=>'required',
             // 'jam_praktik'=>'required',
-            'spesialis'=>'required',
+            'biaya_layanan'=>'required',
             'poli_id'=>'required'
            
         

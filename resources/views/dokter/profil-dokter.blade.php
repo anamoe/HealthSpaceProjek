@@ -3,7 +3,9 @@
 @section('content')
 <br />
 <h5 class="fw-semibold">
-    <a href="{{url('dokter/dashboard')}}"><i class="ti ti-arrow-left bg-danger rounded-circle text-white">Kembali</i></a>
+    <a href="{{url('dokter/dashboard')}}">
+    <i class="fas fa-arrow-left bg-danger rounded-circle text-white"></i> Kembali
+</a>
     Edit Profil Dokter
 </h5>
 <div class="section mb-5 p-2">
@@ -29,8 +31,8 @@
 
                         <div class="form-group basic">
                             <div class="input-wrapper">
-                                <label class="label" for="name">Spesialis</label>
-                                <input type="text" class="form-control  @error('spesialis') is-invalid @enderror" value="{{$users->spesialis }}" name="spesialis" placeholder="Spesialis">
+                                <label class="label" for="name">Biaya Layanan</label>
+                                <input type="number" class="form-control  @error('biaya_layanan') is-invalid @enderror" value="{{$users->biaya_layanan }}" name="spesialis" placeholder="Spesialis">
                             </div>
                         </div>
 

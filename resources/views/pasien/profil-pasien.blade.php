@@ -3,7 +3,10 @@
 @section('content')
 <br/>
 <h5 class="fw-semibold">
-<a href="{{url('pasien/dashboard')}}"><i class="ti ti-arrow-left bg-danger rounded-circle text-white">Kembali</i></a>
+<a href="{{ url('pasien/dashboard') }}">
+    <i class="fas fa-arrow-left bg-danger rounded-circle text-white"></i> Kembali
+</a>
+
 Edit Profil Pasien</h5>
 <div class="section mb-5 p-2">
     <form action="{{url('pasien/profil_pasien_update',$users->id)}}" method="post" enctype="multipart/form-data">
