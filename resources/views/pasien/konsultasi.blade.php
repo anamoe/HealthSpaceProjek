@@ -115,7 +115,7 @@
                         <li class="chat-contact-list-item chat-contact-list-item-title">
                             <h5 class="text-primary mb-0">Konsultasi</h5>
                         </li>
-                   
+
 
                         @forelse($dokter as $d)
 
@@ -137,9 +137,9 @@
                             <h6 class="text-muted mb-0">Tidak Ditemukan</h6>
                         </li>
                         @endforelse
-                      
 
-                    
+
+
                     </ul>
                     <!-- Contacts -->
 
@@ -162,7 +162,7 @@
                                 <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2"
                                     data-bs-toggle="sidebar" data-overlay="" data-target="#app-chat-contacts"></i>
                                 <div class="flex-shrink-0 avatar">
-                                    
+
                                 </div>
                                 <div class="chat-contact-info flex-grow-1 ms-3">
                                     <h6 class="m-0"></h6>
@@ -191,25 +191,22 @@
                     </div>
                     <div class="chat-history-body ps ps--active-y">
                         <ul class="list-unstyled chat-history mb-0">
-                          
+
                         </ul>
-                        
+
                     </div>
                     <!-- Chat message form -->
                     <div class="chat-history-footer">
                         <form class="form-send-message d-flex justify-content-between align-items-center ">
                             <input class="form-control message-input border-0 me-3 shadow-none"
-                                placeholder="Type your message here...">
+                                placeholder="Type your message here..." disabled>
                             <div class="message-actions d-flex align-items-center">
                                 <!-- <i class="speech-to-text bx bx-microphone bx-sm cursor-pointer"></i>
                                 <label for="attach-doc" class="form-label mb-0">
                                     <i class="bx bx-paperclip bx-sm cursor-pointer mx-3 text-body"></i>
                                     <input type="file" id="attach-doc" hidden="">
                                 </label> -->
-                                <button class="btn btn-primary d-flex send-msg-btn">
-                                    <i class="bx bx-paper-plane me-md-1 me-0"></i>
-                                    <span class="align-middle d-md-inline-block d-none">Send</span>
-                                </button>
+
                             </div>
                         </form>
                     </div>
@@ -324,7 +321,7 @@
 
 
 
-    
+
     $(".form-send-message").on('submit', (e) => {
         e.preventDefault()
         axios.post("{{url('sendchat')}}", {
@@ -332,7 +329,7 @@
             isi_chat: input_message.val()
         });
         $(".chat-history").append(`
-            <li class="chat-message chat-message-right">
+        <li class="chat-message chat-message-right">
                 <div class="d-flex overflow-hidden">
                     <div class="chat-message-wrapper flex-grow-1">
                         <div class="chat-message-text">
@@ -356,10 +353,36 @@
         i.scrollTo(0, i.scrollHeight)
         input_message.val('')
 
-    })
+    });
+
+    let my_mee = (data)=>{
+        let my_mee =  
+        `
+        <li class="chat-message chat-message-right">
+                <div class="d-flex overflow-hidden">
+                    <div class="chat-message-wrapper flex-grow-1">
+                        <div class="chat-message-text">
+                            <p class="mb-0">${data.isi_chat}</p>
+                        </div>
+                        <div class="text-end text-muted mt-1">
+                            <i class="bx bx-check-double text-success"></i>
+                            <small>10:10 AM</small>
+                        </div>
+                    </div>
+                    <div class="user-avatar flex-shrink-0 ms-3">
+                        <div class="avatar avatar-sm">
+                            <img src="http://127.0.0.1:8000/admin_theme/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                        </div>
+                    </div>
+                </div>
+            </li>
+        `;
+
+        return my_mee;
+    }
 
 
-    let see_mess = (pesan)=>{
+    let see_mess = (data) => {
         let mess = `
              <li class="chat-message">
                     <div class="d-flex overflow-hidden">
@@ -371,7 +394,7 @@
                         </div>
                         <div class="chat-message-wrapper flex-grow-1">
                             <div class="chat-message-text">
-                                <p class="mb-0">${pesan}</p>
+                                <p class="mb-0">${data.isi_chat}</p>
                             </div>
                             <div class="text-muted mt-1">
                                 <small>10:02 AM</small>
@@ -383,7 +406,7 @@
         return mess;
     }
 
-    let pilihdokter = async (data,el)=>{
+    let pilihdokter = async (data, el) => {
         $(".chat-contact-list-item").removeClass('active')
         $(el).addClass('active')
 
@@ -395,8 +418,43 @@
 
         $("#active_chat .chat-contact-info").html(`  <h6 class="m-0">${data.nama}</h6>
                                     <small class="user-status text-muted">${data.nama_poli}</small>  `)
+        await getChat(data.user_id)
 
     }
 
+    let getChat = async (id) => {
+        let data = await axios.get(`{{url('getchat')}}/${id}`)
+            .then((res) => {
+                console.log(res.data)
+                if (res.data.status_konsultasi === 'active') {
+                    $(".message-actions").html(`  
+                                <button class="btn btn-primary d-flex send-msg-btn">
+                                    <i class="bx bx-paper-plane me-md-1 me-0"></i>
+                                    <span class="align-middle d-md-inline-block d-none">Send</span>
+                                </button>`)
+                    $(".message-input").prop('disabled',false)
+                } else {
+                    $(".message-input").prop('disabled',true)
+                    $(".message-actions").html(`
+                        <button disabled class="btn btn-primary d-flex send-msg-btn">
+                                    Sesi Habis
+                        </button>`);
+                }
+
+                $(".chat-history").empty()
+                res.data.chats.forEach((cat)=>{
+                    console.log(cat.to_id == id)
+                    if(cat.to_id == id_to){
+                        $(".chat-history").append(my_mee(cat))
+                    }else{
+                        $(".chat-history").append(see_mess(cat))
+                    }
+                })
+
+                i.scrollTo(0, i.scrollHeight)
+
+            })
+        return data;
+    }
 </script>
 @endpush

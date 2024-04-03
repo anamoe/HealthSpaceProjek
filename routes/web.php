@@ -116,3 +116,4 @@ Route::get('pemesanan-cancel/{id}', [PasienController::class, 'bookingcancel'])-
 
 
     Route::post('sendchat',[KonsultasiPasienController::class,'sendChat']);
+    Route::get('getchat/{id}',[KonsultasiPasienController::class,'getChat']);
