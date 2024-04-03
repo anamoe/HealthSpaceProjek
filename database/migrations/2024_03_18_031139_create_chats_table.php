@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('konsul_id')->constrained();
             // $table->foreignId('pasien_id')->constrained();
             // $table->foreignId('dokter_id')->constrained();
-            $table->bigInteger('pasien_id')->nullable();
-            $table->bigInteger('dokter_id')->nullable();
+            $table->bigInteger('from_id')->nullable();
+            $table->bigInteger('to_id')->nullable();
             $table->longText('isi_chat');
 
             

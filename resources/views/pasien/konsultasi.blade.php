@@ -12,7 +12,8 @@
                 <div
                     class="chat-sidebar-left-user sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap p-4 mt-2">
                     <div class="avatar avatar-xl avatar-online">
-                        <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                        <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt="Avatar"
+                            class="rounded-circle">
                     </div>
                     <h5 class="mt-3 mb-1">John Doe</h5>
                     <small class="text-muted">UI/UX Designer</small>
@@ -95,12 +96,12 @@
                     <div class="d-flex align-items-center me-3 me-lg-0">
                         <div class="flex-shrink-0 avatar avatar-online me-2" data-bs-toggle="sidebar"
                             data-overlay="app-overlay-ex" data-target="#app-chat-sidebar-left">
-                            <img class="user-avatar rounded-circle cursor-pointer" src="{{asset('admin_theme')}}/assets/img/avatars/1.png"
-                                alt="Avatar">
+                            <img class="user-avatar rounded-circle cursor-pointer border"
+                                src="{{asset('profil/'.auth()->user()->profil)}}" alt="Avatar">
                         </div>
                         <div class="chat-contact-info flex-grow-1 ms-3">
-                           <h6 class="m-0">Nizam</h6>
-                           <small class="user-status text-muted">NextJS developer</small>
+                            <h6 class="m-0">{{auth()->user()->nama}}</h6>
+                            <small class="user-status text-muted">Pasien</small>
                         </div>
                     </div>
                     <i class="bx bx-x cursor-pointer position-absolute top-0 end-0 mt-2 me-1 fs-4 d-lg-none d-block"
@@ -112,41 +113,36 @@
                     <!-- Chats -->
                     <ul class="list-unstyled chat-contact-list pt-1" id="chat-list">
                         <li class="chat-contact-list-item chat-contact-list-item-title">
-                            <h5 class="text-primary mb-0">Chats</h5>
+                            <h5 class="text-primary mb-0">Konsultasi</h5>
                         </li>
-                        <li class="chat-contact-list-item chat-list-item-0 d-none">
-                            <h6 class="text-muted mb-0">No Chats Found</h6>
-                        </li>
-                        <li class="chat-contact-list-item">
+                   
+
+                        @forelse($dokter as $d)
+
+                        <li class="chat-contact-list-item" onclick="pilihdokter({{$d}},this)">
                             <a class="d-flex align-items-center">
                                 <div class="flex-shrink-0 avatar avatar-online">
-                                    <img src="{{asset('admin_theme')}}/assets/img/avatars/7.png" alt="Avatar" class="rounded-circle">
+                                    <img src="{{asset('profil/'.$d->profil)}}" alt="Avatar"
+                                        class="rounded-circle border">
                                 </div>
                                 <div class="chat-contact-info flex-grow-1 ms-3">
-                                    <h6 class="chat-contact-name text-truncate m-0">Waldemar Mannering</h6>
-                                    <p class="chat-contact-status text-truncate mb-0 text-muted">Refer friends. Get
-                                        rewards.</p>
+                                    <h6 class="chat-contact-name text-truncate m-0">{{$d->nama}}</h6>
+                                    <p class="chat-contact-status text-truncate mb-0 text-muted">{{$d->nama_poli}}</p>
                                 </div>
                                 <small class="text-muted mb-auto">5 Minutes</small>
                             </a>
                         </li>
-                    
-                        <li class="chat-contact-list-item">
-                            <a class="d-flex align-items-center">
-                                <div class="flex-shrink-0 avatar avatar-busy">
-                                    <span class="avatar-initial rounded-circle bg-label-success">CM</span>
-                                </div>
-                                <div class="chat-contact-info flex-grow-1 ms-3">
-                                    <h6 class="chat-contact-name text-truncate m-0">Calvin Moore</h6>
-                                    <p class="chat-contact-status text-truncate mb-0 text-muted">If it takes long you
-                                        can mail inbox user</p>
-                                </div>
-                                <small class="text-muted mb-auto">1 Day</small>
-                            </a>
+                        @empty
+                        <li class="chat-contact-list-item chat-list-item-0">
+                            <h6 class="text-muted mb-0">Tidak Ditemukan</h6>
                         </li>
+                        @endforelse
+                      
+
+                    
                     </ul>
                     <!-- Contacts -->
-                  
+
                     <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                         <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
                     </div>
@@ -162,16 +158,15 @@
                 <div class="chat-history-wrapper">
                     <div class="chat-history-header border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex overflow-hidden align-items-center">
+                            <div class="d-flex overflow-hidden align-items-center" id="active_chat">
                                 <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2"
                                     data-bs-toggle="sidebar" data-overlay="" data-target="#app-chat-contacts"></i>
                                 <div class="flex-shrink-0 avatar">
-                                    <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle"
-                                        data-bs-toggle="sidebar" data-overlay="" data-target="#app-chat-sidebar-right">
+                                    
                                 </div>
                                 <div class="chat-contact-info flex-grow-1 ms-3">
-                                    <h6 class="m-0">Felecia Rower</h6>
-                                    <small class="user-status text-muted">NextJS developer</small>
+                                    <h6 class="m-0"></h6>
+                                    <small class="user-status text-muted"></small>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center">
@@ -196,194 +191,9 @@
                     </div>
                     <div class="chat-history-body ps ps--active-y">
                         <ul class="list-unstyled chat-history mb-0">
-                            <li class="chat-message chat-message-right">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">How can we help? We're here for you! 😄</p>
-                                        </div>
-                                        <div class="text-end text-muted mt-1">
-                                            <i class="bx bx-check-double text-success"></i>
-                                            <small>10:00 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="user-avatar flex-shrink-0 ms-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="user-avatar flex-shrink-0 me-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Hey John, I am looking for the best admin template.</p>
-                                            <p class="mb-0">Could you please help me to find it out? 🤔</p>
-                                        </div>
-                                        <div class="chat-message-text mt-2">
-                                            <p class="mb-0">It should be Bootstrap 5 compatible.</p>
-                                        </div>
-                                        <div class="text-muted mt-1">
-                                            <small>10:02 AM</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message chat-message-right">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Sneat has all the components you'll ever need in a app.</p>
-                                        </div>
-                                        <div class="text-end text-muted mt-1">
-                                            <i class="bx bx-check-double text-success"></i>
-                                            <small>10:03 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="user-avatar flex-shrink-0 ms-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="user-avatar flex-shrink-0 me-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Looks clean and fresh UI. 😃</p>
-                                        </div>
-                                        <div class="chat-message-text mt-2">
-                                            <p class="mb-0">It's perfect for my next project.</p>
-                                        </div>
-                                        <div class="chat-message-text mt-2">
-                                            <p class="mb-0">How can I purchase it?</p>
-                                        </div>
-                                        <div class="text-muted mt-1">
-                                            <small>10:05 AM</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message chat-message-right">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Thanks, you can purchase it.</p>
-                                        </div>
-                                        <div class="text-end text-muted mt-1">
-                                            <i class="bx bx-check-double text-success"></i>
-                                            <small>10:06 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="user-avatar flex-shrink-0 ms-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="user-avatar flex-shrink-0 me-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">I will purchase it for sure. 👍</p>
-                                        </div>
-                                        <div class="chat-message-text mt-2">
-                                            <p class="mb-0">Thanks.</p>
-                                        </div>
-                                        <div class="text-muted mt-1">
-                                            <small>10:08 AM</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message chat-message-right">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Great, Feel free to get in touch.</p>
-                                        </div>
-                                        <div class="text-end text-muted mt-1">
-                                            <i class="bx bx-check-double text-success"></i>
-                                            <small>10:10 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="user-avatar flex-shrink-0 ms-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="user-avatar flex-shrink-0 me-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="chat-message-wrapper flex-grow-1">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Do you have design files for Sneat?</p>
-                                        </div>
-                                        <div class="text-muted mt-1">
-                                            <small>10:15 AM</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="chat-message chat-message-right">
-                                <div class="d-flex overflow-hidden">
-                                    <div class="chat-message-wrapper flex-grow-1 w-50">
-                                        <div class="chat-message-text">
-                                            <p class="mb-0">Yes that's correct documentation file, Design files are
-                                                included with the template.</p>
-                                        </div>
-                                        <div class="text-end text-muted mt-1">
-                                            <i class="bx bx-check-double"></i>
-                                            <small>10:15 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="user-avatar flex-shrink-0 ms-3">
-                                        <div class="avatar avatar-sm">
-                                            <img src="{{asset('admin_theme')}}/assets/img/avatars/1.png" alt="Avatar"
-                                                class="rounded-circle">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                          
                         </ul>
-                        <div class="ps__rail-x" style="left: 0px; bottom: -769px;">
-                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                        </div>
-                        <div class="ps__rail-y" style="top: 769px; height: 306px; right: 0px;">
-                            <div class="ps__thumb-y" tabindex="0" style="top: 218px; height: 87px;"></div>
-                        </div>
+                        
                     </div>
                     <!-- Chat message form -->
                     <div class="chat-history-footer">
@@ -412,7 +222,8 @@
                 <div
                     class="sidebar-header d-flex flex-column justify-content-center align-items-center flex-wrap p-4 mt-2">
                     <div class="avatar avatar-xl avatar-online">
-                        <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar" class="rounded-circle">
+                        <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar"
+                            class="rounded-circle">
                     </div>
                     <h6 class="mt-3 mb-1">Felecia Rower</h6>
                     <small class="text-muted">NextJS Developer</small>
@@ -483,9 +294,109 @@
 
 
 </div>
-
 @endsection
 
 @push('js')
+<script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{{asset('admin_theme/assets/vendor/js/app-chat.js')}}"></script>
+<script>
+    let id_saya = "{{auth()->user()->id}}"
+    let id_to = "";
+    let input_message = $(".message-input");
+    let i = document.querySelector(".chat-history-body");
+
+    $(document).ready(function () {
+
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('84d89372bac06830ab70', {
+            cluster: 'ap1',
+            forceTLS: true
+        });
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function (data) {
+            if (id_saya == data.to && id_to == data.from) {
+                see_mess(data.isi_chat)
+            }
+        })
+    });
+
+
+
+    
+    $(".form-send-message").on('submit', (e) => {
+        e.preventDefault()
+        axios.post("{{url('sendchat')}}", {
+            to: id_to,
+            isi_chat: input_message.val()
+        });
+        $(".chat-history").append(`
+            <li class="chat-message chat-message-right">
+                <div class="d-flex overflow-hidden">
+                    <div class="chat-message-wrapper flex-grow-1">
+                        <div class="chat-message-text">
+                            <p class="mb-0">${input_message.val()}</p>
+                        </div>
+                        <div class="text-end text-muted mt-1">
+                            <i class="bx bx-check-double text-success"></i>
+                            <small>10:10 AM</small>
+                        </div>
+                    </div>
+                    <div class="user-avatar flex-shrink-0 ms-3">
+                        <div class="avatar avatar-sm">
+                            <img src="http://127.0.0.1:8000/admin_theme/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        `)
+
+        i.scrollTo(0, i.scrollHeight)
+        input_message.val('')
+
+    })
+
+
+    let see_mess = (pesan)=>{
+        let mess = `
+             <li class="chat-message">
+                    <div class="d-flex overflow-hidden">
+                        <div class="user-avatar flex-shrink-0 me-3">
+                            <div class="avatar avatar-sm">
+                                <img src="{{asset('admin_theme')}}/assets/img/avatars/5.png" alt="Avatar"
+                                    class="rounded-circle">
+                            </div>
+                        </div>
+                        <div class="chat-message-wrapper flex-grow-1">
+                            <div class="chat-message-text">
+                                <p class="mb-0">${pesan}</p>
+                            </div>
+                            <div class="text-muted mt-1">
+                                <small>10:02 AM</small>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+        `
+        return mess;
+    }
+
+    let pilihdokter = async (data,el)=>{
+        $(".chat-contact-list-item").removeClass('active')
+        $(el).addClass('active')
+
+        let profil = `{{asset('profil')}}/${data.profil}`
+        id_to = data.user_id
+        $("#active_chat .avatar").html(` <img src="${profil}" alt="Avatar"
+                                        class="rounded-circle border" data-bs-toggle="sidebar" data-overlay=""
+                                        data-target="#app-chat-sidebar-right"> `)
+
+        $("#active_chat .chat-contact-info").html(`  <h6 class="m-0">${data.nama}</h6>
+                                    <small class="user-status text-muted">${data.nama_poli}</small>  `)
+
+    }
+
+</script>
 @endpush

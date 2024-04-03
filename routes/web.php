@@ -114,3 +114,5 @@ Route::get('pemesanan-cancel/{id}', [PasienController::class, 'bookingcancel'])-
     Route::get('dokter/jadwal_praktik/update/{id}', [JadwalPraktikDokterController::class, 'updates']);
     Route::get('dokter/jadwal_praktik/hapus/{id}', [JadwalPraktikDokterController::class, 'destroy']);
 
+
+    Route::post('sendchat',[KonsultasiPasienController::class,'sendChat']);

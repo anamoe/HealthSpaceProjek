@@ -48,10 +48,11 @@ class DokterController extends Controller
         
         ]);
 
+        $data0['profil']='doctor.png';
         $user = User::create($data0);
 
         $data['user_id']=$user->id;
-        $data['profil']='doctor.png';
+        // $data['profil']='doctor.png';
         
         
        Dokter::create($data);

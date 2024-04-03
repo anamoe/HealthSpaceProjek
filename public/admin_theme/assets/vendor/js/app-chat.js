@@ -49,12 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     t = (t.removeAttribute("class"), Helpers._addClass("avatar avatar-xl " + y[e], t), document.querySelector(".app-chat-contacts .avatar"));
                 t.removeAttribute("class"), Helpers._addClass("flex-shrink-0 avatar " + y[e] + " me-3", t)
             })
-        }), n.forEach(e => {
-            e.addEventListener("click", e => {
-                n.forEach(e => {
-                    e.classList.remove("active")
-                }), e.currentTarget.classList.add("active")
-            })
         }), b && b.addEventListener("keyup", e => {
             var e = e.currentTarget.value.toLowerCase(),
                 t = document.querySelector(".chat-list-item-0"),
@@ -63,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 r = [].slice.call(document.querySelectorAll("#contact-list li:not(.chat-contact-list-item-title)"));
             l(c, 0, e, t), l(r, 0, e, a)
         }), p.addEventListener("submit", e => {
-            e.preventDefault(), v.value && ((e = document.createElement("div")).className = "chat-message-text mt-2", e.innerHTML = '<p class="mb-0 text-break">' + v.value + "</p>", document.querySelector("li:last-child .chat-message-wrapper").appendChild(e), v.value = "", a())
+            // e.preventDefault(), v.value && ((e = document.createElement("div")).className = "chat-message-text mt-2", e.innerHTML = '<p class="mb-0 text-break">' + v.value + "</p>", document.querySelector("li:last-child .chat-message-wrapper").appendChild(e), v.value = "", a())
         });
         let e = document.querySelector(".chat-history-header [data-target='#app-chat-contacts']"),
             t = document.querySelector(".app-chat-sidebar-left .close-sidebar");
