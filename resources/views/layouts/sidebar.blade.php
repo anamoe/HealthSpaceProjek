@@ -81,8 +81,8 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
-            <a href="{{url('admin/dokter')}}" class="menu-link">
+        <li class="menu-item {{ request()->is('dokter/konsultasi') ? 'active' : ''  }} ">
+            <a href="{{url('dokter/konsultasi')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-chat"></i>
                 <div>Chat Pasien</div>
             </a>

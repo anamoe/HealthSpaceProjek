@@ -16,13 +16,10 @@ return new class extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('konsul_id')->constrained();
-            // $table->foreignId('pasien_id')->constrained();
-            // $table->foreignId('dokter_id')->constrained();
             $table->bigInteger('from_id')->nullable();
             $table->bigInteger('to_id')->nullable();
             $table->longText('isi_chat');
-
-            
+            $table->string("type")->nullable()->default('text');
             $table->timestamps();
         });
     }

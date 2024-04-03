@@ -16,6 +16,7 @@ use App\Http\Controllers\Dokter\ChatKonsultasiController;
 use App\Http\Controllers\Dokter\DashboardDokterController;
 use App\Http\Controllers\Dokter\JadwalPraktikDokterController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\Dokter\KonsultasiController as KonsultasiDokterController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -84,6 +85,10 @@ Route::middleware(['role:dokter'])->group(function () {
     Route::prefix('dokter')->group(function () {
       
         Route::get('dashboard', [DashboardDokterController::class, 'index']);
+        Route::get('konsultasi', [KonsultasiDokterController::class, 'index']);
+
+        Route::post('sendchat',[KonsultasiDokterController::class,'sendChat']);
+        Route::get('getchat/{id}',[KonsultasiDokterController::class,'getChat']);
         
 
         Route::get('profil-dokter', [AuthController::class, 'profil_dokter']);

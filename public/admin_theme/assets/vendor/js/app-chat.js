@@ -43,12 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             wheelPropagation: !1,
             suppressScrollX: !0
         }), a(), h.forEach(e => {
-            e.addEventListener("click", e => {
-                var t = document.querySelector(".chat-sidebar-left-user .avatar"),
-                    e = e.currentTarget.value,
-                    t = (t.removeAttribute("class"), Helpers._addClass("avatar avatar-xl " + y[e], t), document.querySelector(".app-chat-contacts .avatar"));
-                t.removeAttribute("class"), Helpers._addClass("flex-shrink-0 avatar " + y[e] + " me-3", t)
-            })
+           
         }), b && b.addEventListener("keyup", e => {
             var e = e.currentTarget.value.toLowerCase(),
                 t = document.querySelector(".chat-list-item-0"),
@@ -62,9 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let e = document.querySelector(".chat-history-header [data-target='#app-chat-contacts']"),
             t = document.querySelector(".app-chat-sidebar-left .close-sidebar");
         var c, r, s;
-        e.addEventListener("click", e => {
-            t.removeAttribute("data-overlay")
-        }), f.length && null != (c = c || webkitSpeechRecognition) && (r = new c, s = !1, f.on("click", function () {
+         f.length && null != (c = c || webkitSpeechRecognition) && (r = new c, s = !1, f.on("click", function () {
             const t = $(this);
             !(r.onspeechstart = function () {
                 s = !0
@@ -78,3 +71,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }))
     }
 });
+
+
+function timeAgo(input) {
+    const date = (input instanceof Date) ? input : new Date(input);
+    const formatter = new Intl.RelativeTimeFormat('en');
+    const ranges = {
+      years: 3600 * 24 * 365,
+      months: 3600 * 24 * 30,
+      weeks: 3600 * 24 * 7,
+      days: 3600 * 24,
+      hours: 3600,
+      minutes: 60,
+      seconds: 1
+    };
+    const secondsElapsed = (date.getTime() - Date.now()) / 1000;
+    for (let key in ranges) {
+      if (ranges[key] < Math.abs(secondsElapsed)) {
+        const delta = secondsElapsed / ranges[key];
+        return formatter.format(Math.round(delta), key);
+      }
+    }
+  }

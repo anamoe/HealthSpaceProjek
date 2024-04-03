@@ -7,7 +7,7 @@
 
     <div class="app-chat overflow-hidden card">
         <div class="row g-0">
-      
+           
 
             <!-- Chat & Contacts -->
             <div class="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end"
@@ -21,7 +21,7 @@
                         </div>
                         <div class="chat-contact-info flex-grow-1 ms-3">
                             <h6 class="m-0">{{auth()->user()->nama}}</h6>
-                            <small class="user-status text-muted">Pasien</small>
+                            <small class="user-status text-muted">Dokter</small>
                         </div>
                     </div>
                     <i class="bx bx-x cursor-pointer position-absolute top-0 end-0 mt-2 me-1 fs-4 d-lg-none d-block"
@@ -37,7 +37,7 @@
                         </li>
 
 
-                        @forelse($dokter as $d)
+                        @forelse($pasien as $d)
 
                         <li class="chat-contact-list-item" onclick="pilihdokter({{$d}},this)">
                             <a class="d-flex align-items-center">
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="chat-contact-info flex-grow-1 ms-3">
                                     <h6 class="chat-contact-name text-truncate m-0">{{$d->nama}}</h6>
-                                    <p class="chat-contact-status text-truncate mb-0 text-muted">{{$d->nama_poli}}</p>
+                                    <p class="chat-contact-status text-truncate mb-0 text-muted">{{$d->jenis_kelamin}}</p>
                                 </div>
                                 <small class="text-muted mb-auto">5 Minutes</small>
                             </a>
@@ -79,7 +79,7 @@
                     <div class="chat-history-header border-bottom">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex overflow-hidden align-items-center" id="active_chat">
-                            <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2"
+                                <i class="bx bx-menu bx-sm cursor-pointer d-lg-none d-block me-2"
                                     onclick="showcontact()"></i>
                                 <div class="flex-shrink-0 avatar">
 
@@ -90,14 +90,18 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center">
-                               
+                                <!-- <i class="bx bx-phone-call cursor-pointer d-sm-block d-none me-3 fs-4"></i>
+                                <i class="bx bx-video cursor-pointer d-sm-block d-none me-3 fs-4"></i>
+                                <i class="bx bx-search cursor-pointer d-sm-block d-none me-3 fs-4"></i> -->
                                 <div class="dropdown">
                                     <button class="btn p-0" type="button" id="chat-header-actions"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="bx bx-dots-vertical-rounded fs-4"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="chat-header-actions">
-                                        
+                                        <a class="dropdown-item" href="javascript:void(0);">Berikan Catatan</a>
+                                        <a class="dropdown-item" href="javascript:void(0);">Berikan Resep</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="endChat()">End Chat Konsultasi</a>
                                     </div>
                                 </div>
                             </div>
@@ -127,8 +131,6 @@
                 </div>
             </div>
             <!-- /Chat History -->
-
-            
 
             <div class="app-overlay"></div>
         </div>
@@ -160,15 +162,7 @@
         channel.bind('my-event', function (data) {
             if (id_saya == data.to && id_to == data.from) {
                 $(".chat-history").append(see_mess(data.isi_chat))
-                if(data.isi_chat.type == "end chat"){
-                    $(".message-input").prop('disabled',true)
-                    $(".message-actions").html(`
-                        <button disabled class="btn btn-primary d-flex ssee_messend-msg-btn">
-                                    Sesi Habis
-                        </button>`);
-                }
                 i.scrollTo(0, i.scrollHeight)
-
             }
         })
     });
@@ -178,7 +172,7 @@
 
     $(".form-send-message").on('submit', (e) => {
         e.preventDefault()
-        axios.post("{{url('sendchat')}}", {
+        axios.post("{{url('dokter/sendchat')}}", {
             to: id_to,
             isi_chat: input_message.val()
         });
@@ -191,7 +185,7 @@
                         </div>
                         <div class="text-end text-muted mt-1">
                             <i class="bx bx-check-double text-success"></i>
-                            <small>ago</small>
+                            <small>a go</small>
                         </div>
                     </div>
                     <div class="user-avatar flex-shrink-0 ms-3">
@@ -215,8 +209,8 @@
         <li class="chat-message chat-message-right">
                 <div class="d-flex overflow-hidden">
                     <div class="chat-message-wrapper flex-grow-1">
-                        <div class="chat-message-text">
-                            <p class="mb-0">${data.isi_chat}</p>
+                        <div class="chat-message-text ${data.type == 'end chat' ? 'bg-secondary' : ''}">
+                            <p class="mb-0  ${data.type == 'end chat' ? 'font-italic text-white' : ''}">${data.isi_chat}</p>
                         </div>
                         <div class="text-end text-muted mt-1">
                             <i class="bx bx-check-double text-success"></i>
@@ -247,8 +241,8 @@
                             </div>
                         </div>
                         <div class="chat-message-wrapper flex-grow-1">
-                            <div class="chat-message-text ${data.type == 'end chat' ? 'bg-secondary' : ''}">
-                                <p class="mb-0 ${data.type == 'end chat' ? 'font-italic text-white' : ''}">${data.isi_chat}</p>
+                            <div class="chat-message-text">
+                                <p class="mb-0">${data.isi_chat}</p>
                             </div>
                             <div class="text-muted mt-1">
                                 <small>${timeAgo(data.created_at)}</small>
@@ -277,27 +271,16 @@
     }
 
     let getChat = async (id) => {
-        let data = await axios.get(`{{url('getchat')}}/${id}`)
+        let data = await axios.get(`{{url('dokter/getchat')}}/${id}`)
             .then((res) => {
-                console.log(res.data)
-                if (res.data.status_konsultasi === 'active') {
-                    $(".message-actions").html(`  
+                $(".message-actions").html(`  
                                 <button class="btn btn-primary d-flex send-msg-btn">
                                     <i class="bx bx-paper-plane me-md-1 me-0"></i>
                                     <span class="align-middle d-md-inline-block d-none">Send</span>
                                 </button>`)
                     $(".message-input").prop('disabled',false)
-                } else {
-                    $(".message-input").prop('disabled',true)
-                    $(".message-actions").html(`
-                        <button disabled class="btn btn-primary d-flex send-msg-btn">
-                                    Sesi Habis
-                        </button>`);
-                }
-
                 $(".chat-history").empty()
                 res.data.chats.forEach((cat)=>{
-                    console.log(cat.to_id == id)
                     if(cat.to_id == id_to){
                         $(".chat-history").append(my_mee(cat))
                     }else{
@@ -318,5 +301,40 @@
     let closecontact = ()=>{
         $(".app-chat-contacts").removeClass('show')
     }
+
+    let endChat = ()=>{
+        axios.post("{{url('dokter/sendchat')}}", {
+            to: id_to,
+            type : 'end chat',
+            isi_chat: 'Sesi Konsultasi Telah Berahir'
+        })
+        .then(res=>{
+            if(res.data.status_konsul != false){
+                $(".chat-history").append(`
+                    <li class="chat-message chat-message-right">
+                            <div class="d-flex overflow-hidden">
+                                <div class="chat-message-wrapper flex-grow-1">
+                                    <div class="chat-message-text bg-secondary">
+                                        <p class="mb-0 font-italic text-white">Sesi Telah Berahir</p>
+                                    </div>
+                                    <div class="text-end text-muted mt-1">
+                                        <i class="bx bx-check-double text-success"></i>
+                                        <small>a go</small>
+                                    </div>
+                                </div>
+                                <div class="user-avatar flex-shrink-0 ms-3">
+                                    <div class="avatar avatar-sm">
+                                        <img src="http://127.0.0.1:8000/admin_theme/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    `)
+            }
+        })
+        i.scrollTo(0, i.scrollHeight)
+    }
+
 </script>
 @endpush
