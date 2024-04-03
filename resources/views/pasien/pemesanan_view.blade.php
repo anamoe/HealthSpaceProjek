@@ -30,7 +30,7 @@
             <p>Kode Booking : <span class="fw-bold float-end">{{$pemesanan->kode_pembayaran}}</span></p>
             <p>Konsultasi : <span class="fw-bold float-end">{{$konsultasi->konsultasi}}</span></p>
             <p>Nama Dokter : <span class="fw-bold float-end">{{$konsultasi->nama}}</span></p>
-            <p>Spesialis : <span class="fw-bold float-end">{{$konsultasi->spesialis}}</span></p>
+           
 
             <hr>
 

@@ -84,14 +84,16 @@
         </div>
     </div>
 
+    
     <div class="col-lg-5 col-md-12 col-6 mb-4">
         <div class="card">
             <div class="card-body">
+            <span class="fw-medium d-block mb-1">Statistik Invoice (%)</span>
                 <div class="card-title d-flex align-items-start justify-content-between">
-                    <div class="avatar flex-shrink-0">
-                        <i class="menu-icon tf-icons bx bx-first-aid card-title" style="font-size : 45px;"></i>
-                    </div>
-
+                  
+                    <div style="width: 75%; margin: auto;">
+                    <canvas id="invoiceChart"></canvas>
+                </div>
                 </div>
                
             </div>
@@ -148,5 +150,40 @@
         }
     });
 </script>
-s
+<script>
+    var ctx = document.getElementById('invoiceChart').getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {!! json_encode($data2['labels']) !!},
+            datasets: [{
+                data: {!! json_encode($data2['data']) !!},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)', // Merah untuk pending
+                    'rgba(54, 162, 235, 0.5)', // Biru untuk terbayar
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)', // Merah untuk pending
+                    'rgba(54, 162, 235, 1)', // Biru untuk terbayar
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = Math.round((currentValue / total) * 100);
+                        return data.labels[tooltipItem.index] + ': ' + currentValue + ' (' + percentage + '%)';
+                    }
+                }
+            }
+        }
+    });
+</script>
     @endpush

@@ -9,8 +9,10 @@ use App\Models\Konsul;
 use Carbon\Carbon;
 use App\Models\Pasien;
 use App\Models\Dokter;
+use App\Models\JadwalPraktikDokter;
 use App\Models\Pembayaran;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class DashboardPasienController extends Controller
@@ -19,9 +21,48 @@ class DashboardPasienController extends Controller
     {
         $datadokter = User::where('role','dokter')
         ->join('dokters','dokters.user_id','users.id')
-        ->select('users.nama','users.id','dokters.spesialis','dokters.biaya_layanan')
+        ->select('users.nama','users.id','users.profil','dokters.biaya_layanan')
         ->get();
-        return view('pasien.dashboard',compact('datadokter'));
+        foreach($datadokter as $d){
+        $jadwal =JadwalPraktikDokter::where('dokter_id',$d->id)->get();
+        $d->jadwal_praktik = $jadwal;
+        $d->profil =asset('profil/'.$d->profil);
+
+        }
+        $konsul = Konsul::where('pasien_id',auth()->user()->id)->count();
+
+        // return $datadokter;
+        $pemesanan = DB::table('pembayarans')
+        ->join('konsuls','pembayarans.konsul_id','konsuls.id')
+        ->select('konsuls.*','pembayarans.*')->orderBy('pembayarans.id','desc')
+        ->where('konsuls.pasien_id',auth()->user()->id)->first();
+    // return $pemesanan;
+
+
+ 
+    if($pemesanan==null){
+        return view('pasien.dashboard',compact('datadokter','konsul'));
+    }else{
+
+        if($pemesanan->status_pembayaran=='pending'){
+            // return view('pasien.dashboard',compact('datadokter','konsul'));
+            return redirect('pasien/pemesanan/'.$pemesanan->id);
+        }else{
+            if($pemesanan->status_konsultasi=='dimulai'){
+                return redirect('pasien/konsultasi');
+            }else{
+                return view('pasien.dashboard',compact('datadokter','konsul'));
+            }
+
+        
+        }
+
+    }
+        
+
+
+  
+     
     }
 
 
@@ -40,7 +81,8 @@ class DashboardPasienController extends Controller
             'dokter_id' =>$request->dokter_id,
             'pasien_id'=>auth()->user()->id,
             'konsultasi'=>$request->konsultasi,
-            'tgl_konsultasi'=> Carbon::now()
+            'tgl_konsultasi'=> Carbon::now(),
+            'status_konsultasi'=>'pending'
         ]);
 
 
@@ -90,13 +132,19 @@ class DashboardPasienController extends Controller
 
     public function pemesanan_view($id)
     {
-        $pemesanan = Pembayaran::findOrFail($id);
+        $pemesanan = Pembayaran::where('id',$id)->first();
         $konsultasi = Konsul::where('konsuls.id',$pemesanan->konsul_id)
         ->leftJoin('users','users.id','konsuls.dokter_id')
         ->leftJoin('dokters','users.id','dokters.user_id')
-        ->select('konsuls.*','users.nama','dokters.spesialis')
+        ->select('konsuls.*','users.nama')
         ->first();
 
-        return view('pasien.pemesanan_view',compact('pemesanan','konsultasi'));
+        if($pemesanan->status_pembayaran=='pending'){
+            return view('pasien.pemesanan_view',compact('pemesanan','konsultasi'));
+        }else{
+            return redirect('pasien/konsultasi');
+        }
+
+       
     }
 }

@@ -1,13 +1,13 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="{{url('/')}}" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <img src="{{asset('login_assets/img/hslogo.png')}}" alt="" width="25" height="25" class="my-3">
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Space Health</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2"> Health Space</span>
         </a>
 
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+        <a href="{{url('/')}}" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
             <i class="bx bx-chevron-left bx-sm align-middle"></i>
         </a>
     </div>
@@ -73,6 +73,14 @@
         </li>
         @endif
         @if(auth()->user()->role == 'dokter')
+
+        <li class="menu-item {{ request()->is('dokter/dashboard') ? 'active' : ''  }}">
+            <a href="{{url('dokter/dashboard')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div>Dashboard</div>
+            </a>
+        </li>
+
         <li class="menu-item {{ request()->is('admin/dokter') ? 'active' : ''  }} ">
             <a href="{{url('admin/dokter')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-chat"></i>

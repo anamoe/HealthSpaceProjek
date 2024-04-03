@@ -12,6 +12,7 @@ use App\Http\Controllers\Pasien\KonsultasiController as KonsultasiPasienControll
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PoliController as AdminPoliController;
 use App\Http\Controllers\Admin\DokterController as AdminDokterController;
+use App\Http\Controllers\Dokter\ChatKonsultasiController;
 use App\Http\Controllers\Dokter\DashboardDokterController;
 use App\Http\Controllers\Dokter\JadwalPraktikDokterController;
 use App\Http\Controllers\LandingPageController;
@@ -87,6 +88,11 @@ Route::middleware(['role:dokter'])->group(function () {
 
         Route::get('profil-dokter', [AuthController::class, 'profil_dokter']);
         Route::post('profil_dokter_update/{id}', [AuthController::class, 'profil_dokter_update']);
+
+
+        Route::get('diagnosa-resep', [ChatKonsultasiController::class, 'konsultasi']);
+
+
     });
 });
 

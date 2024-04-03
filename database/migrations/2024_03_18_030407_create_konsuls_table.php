@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('konsuls', function (Blueprint $table) {
             $table->id();
             $table->string('konsultasi');
+            $table->string('status_konsultasi');
             $table->date('tgl_konsultasi');
             // $table->foreignId('pasien_id')->constrained();
             // $table->foreignId('dokter_id')->constrained();
@@ -26,12 +27,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Konsul::create([
-            'konsultasi'=>'mata',
-            'tgl_konsultasi'=>date('Y-m-d'),
-            'pasien_id'=>1,
-            'dokter_id'=>1
-        ]);
+        // Konsul::create([
+        //     'konsultasi'=>'mata',
+        //     'tgl_konsultasi'=>date('Y-m-d'),
+        //     'tgl_konsultasi'=>date('Y-m-d'),
+        //     'pasien_id'=>1,
+        //     'dokter_id'=>1
+        // ]);
     }
 
     /**

@@ -22,21 +22,26 @@
                 <div class="modal-body">
 
                     <div class="card ">
-                        <img class="card-img-top shadow" src="{{url('profil/profil.jpg')}}" alt="Card image cap">
+                        <img class="card-img-top shadow profil" src="" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title nama_dokter">Nama Dokter</h5>
                             <p class="card-text">
-                                <span class="spesialist">Spesialist Terapi</span>
-                                <span class="float-end fw-bold biaya_layanan">Rp 20.000</span>
+                               
+                                <span id="biaya_layanan" class="float-end fw-bold biaya_layanan"></span>
                             </p>
-
-                            <h6>Jadwal Praktik</h6>
+                            <!-- <h6>Jadwal Praktik</h6>
+                         -->
+                            <!-- <h6>Jadwal Praktik</h6>
                             <p>Senin <span class="float-end">06.00 - 17.00</span></p>
                             <p>Selasa <span class="float-end">06.00 - 17.00</span></p>
                             <p>Rabu <span class="float-end">06.00 - 17.00</span></p>
                             <p>Kamis<span class="float-end">06.00 - 17.00</span></p>
                             <p>Jumat <span class="float-end">06.00 - 17.00</span></p>
-                            <p>Sabtu <span class="float-end">06.00 - 17.00</span></p>
+                            <p>Sabtu <span class="float-end">06.00 - 17.00</span></p> -->
+                            <h6>Jadwal Praktik</h6>
+                        <div class="jadwal_praktik">
+                            <!-- Tempat untuk menampilkan jadwal praktik -->
+                        </div>
                         </div>
                     </div>
 
@@ -144,7 +149,7 @@
                         @foreach($datadokter as $dokter)
                         <div class="col-md-3 mb-3 dokter-list" onclick="viewdokter({{$dokter}})">
                             <div class="card h-100">
-                                <img class="card-img-top" src="{{url('profil/profil.jpg')}}" alt="Card image cap">
+                                <img class="card-img-top" src="{{url($dokter->profil)}}" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title text-center">{{$dokter->nama}}</h5>
                                     <p class="card-text text-center">
@@ -181,9 +186,16 @@
 
     let viewdokter = (dokter) => {
         $(".nama_dokter").html(dokter.nama)
+        $(".profil").attr("src",dokter.profil);
         $(".biaya_layanan").html(formatRupiah(dokter.biaya_layanan))
         $('.bookingchat').attr('onClick', `vieworder(${dokter.id})`);
         $("#modalView").modal('show')
+        $(".jadwal_praktik").empty();
+        dokter.jadwal_praktik.forEach(jadwal => {
+        $(".jadwal_praktik").append(`
+            <p>${jadwal.hari_praktik} <span class="float-end">${jadwal.jam_praktik_awal} - ${jadwal.jam_praktik_akhir}</span></p>
+        `);
+    });
     }
 
     let vieworder = (id) => {

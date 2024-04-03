@@ -35,7 +35,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #E0EFEA;  color: #333;">
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
