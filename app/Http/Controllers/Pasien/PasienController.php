@@ -137,13 +137,16 @@ public function notification_payment(Request $request){
             $p = Pembayaran::where('kode_pembayaran', $notification->order_id)->first();
 
             $p->update([
-                'status_pembayaran' => 'sukses',
+                'status_pembayaran' => 'terbayar',
                 'tanggal_pembayaran' => date('Y-m-d'),
                 'metode_pembayaran'=>$notification->va_numbers[0]->bank
 
             ]);
+            Konsul::where('id',$p->konsul_id)->first()->update([
+                'status_konsultasi'=>'start'
+            ]);
             // dd($notification);
-            return $p;
+            // return $p;
 
         } else {
             //selain settlemned menunggu untuk melakukan pembayaran

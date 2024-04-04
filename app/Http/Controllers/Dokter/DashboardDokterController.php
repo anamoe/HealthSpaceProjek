@@ -14,6 +14,9 @@ class DashboardDokterController extends Controller
     //
     public function index()
     {
+        $labels = ['No Data Available'];
+        $data = [0];
+
 
         $diagnosaTerbanyak = CatatanDokter::join('icds', 'catatan_dokters.diagnosa', 'icds.code')
             ->select('icds.name_id', DB::raw('COUNT(*) as total'))
@@ -21,20 +24,41 @@ class DashboardDokterController extends Controller
             ->orderByDesc('total')
             ->limit(5)
             ->get();
-        $totalDiagnosa = $diagnosaTerbanyak->sum('total');
-        // return $totalDiagnosa;
-        foreach ($diagnosaTerbanyak as $diagnosa) {
-            $labels[] = $diagnosa->name_id;
-            $persentase = ($diagnosa->total / $totalDiagnosa) * 100;
-            $data[] = round($persentase, 2);
-            // return $data;
-        }
 
-        // Membuat array final untuk dikirimkan ke view
+            if ($diagnosaTerbanyak->isNotEmpty()) {
+                // Hitung totalDiagnosa hanya jika $diagnosaTerbanyak tidak kosong
+                $totalDiagnosa = $diagnosaTerbanyak->sum('total');
+            
+                // Lakukan iterasi untuk mengisi $labels dan $data
+                foreach ($diagnosaTerbanyak as $diagnosa) {
+                    $labels[] = $diagnosa->name_id;
+                    $persentase = ($diagnosa->total / $totalDiagnosa) * 100;
+                    $data[] = round($persentase, 2);
+                }
+            } else {
+                // Jika $diagnosaTerbanyak kosong, atur label default dan data nol
+                $labels[] =[' "No Data Available"'];
+                $data[] = 0;
+            }
+
+
+            
+        // $totalDiagnosa = $diagnosaTerbanyak->sum('total');
+        // // return $totalDiagnosa;
+        // foreach ($diagnosaTerbanyak as $diagnosa) {
+        //     $labels[] = $diagnosa->name_id;
+        //     $persentase = ($diagnosa->total / $totalDiagnosa) * 100;
+        //     $data[] = round($persentase, 2);
+        //     // return $data;
+        // }
+
+        // // Membuat array final untuk dikirimkan ke view
         $data = [
             'labels' => $labels,
             'data' => $data,
         ];
+   
+        
         // return $data;
         $konsultasi = Konsul::where('tgl_konsultasi', date('Y-m-d'))->count();
 

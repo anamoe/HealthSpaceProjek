@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('konsul_id')->constrained();
             $table->string('gejala');
-            $table->integer('saran');
+            $table->string('saran');
             $table->string('diagnosa');
             $table->timestamps();
         });
