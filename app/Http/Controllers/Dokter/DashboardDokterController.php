@@ -19,11 +19,12 @@ class DashboardDokterController extends Controller
 
 
         $diagnosaTerbanyak = CatatanDokter::join('icds', 'catatan_dokters.diagnosa', 'icds.code')
-            ->select('icds.name_id', DB::raw('COUNT(*) as total'))
-            ->groupBy('diagnosa')
+            ->select('icds.name_id as diagnosa', DB::raw('COUNT(*) as total'))
+            ->groupBy('diagnosa','name_id')
             ->orderByDesc('total')
             ->limit(5)
             ->get();
+            // return $diagnosaTerbanyak;
 
             if ($diagnosaTerbanyak->isNotEmpty()) {
                 // Hitung totalDiagnosa hanya jika $diagnosaTerbanyak tidak kosong
