@@ -106,8 +106,10 @@ class KonsultasiController extends Controller
         })
         ->get();
 
+        $status_konsul = Konsul::where('pasien_id',$user_id)->where('dokter_id',$my_id)->where('status_konsultasi','start')->first();
 
         return response()->json([
+            'status_konsul'=> $status_konsul ? true : false,
             'chats'=>$messages
         ]);
     }
