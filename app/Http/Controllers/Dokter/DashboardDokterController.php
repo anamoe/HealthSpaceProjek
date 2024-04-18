@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dokter;
 
 use App\Http\Controllers\Controller;
 use App\Models\CatatanDokter;
+use App\Models\Chat;
 use App\Models\Konsul;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class DashboardDokterController extends Controller
             
                 // Lakukan iterasi untuk mengisi $labels dan $data
                 foreach ($diagnosaTerbanyak as $diagnosa) {
-                    $labels[] = $diagnosa->name_id;
+                    $labels[] = $diagnosa->diagnosa;
                     $persentase = ($diagnosa->total / $totalDiagnosa) * 100;
                     $data[] = round($persentase, 2);
                 }
@@ -72,9 +73,14 @@ class DashboardDokterController extends Controller
             ->count();
         //  return $konsultasiBulanIni;
         // return $konsultasi;
-        
+        $chat_terbaru = Chat::join('users','chats.from_id','users.id')
+        ->select('users.nama','chats.*')
+        ->where('to_id',auth()->user()->id)->orderBy('id','desc')->limit(2)->get();
+        foreach($chat_terbaru as $c){
+            $c->tanggal = date('Y-m-d', strtotime($c->updated_at));
+        }
 
 
-        return view('dokter.dashboard', compact('data', 'konsultasi', 'konsultasiBulanIni'));
+        return view('dokter.dashboard', compact('data', 'konsultasi', 'konsultasiBulanIni','chat_terbaru'));
     }
 }
