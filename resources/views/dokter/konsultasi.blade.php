@@ -249,6 +249,39 @@
     </div>
     <!-- Resep Chat -->
 
+     <!--Lihat Catatan -->
+     <div class="modal fade" id="lihatCatatan" aria-labelledby="lihatCatatanLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lihatCatatanLabel">Catatan Dokter</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Obat</th>
+                                        <th>Jumlah</th>
+                                        <th>Dosis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Lihat Catatan -->
+
 
 
 </div>
