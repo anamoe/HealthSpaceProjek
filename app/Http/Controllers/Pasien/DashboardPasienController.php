@@ -30,6 +30,7 @@ class DashboardPasienController extends Controller
         $d->profil =asset('profil/'.$d->profil);
 
         }
+        // return $datadokter;
         $konsul = Konsul::where('pasien_id',auth()->user()->id)->count();
         $konsulterbaru = Konsul::where('pasien_id',auth()->user()->id)->orderBy('id','desc')->limit(2)->get();
         $chat_terbaru = Chat::join('users','chats.from_id','users.id')
